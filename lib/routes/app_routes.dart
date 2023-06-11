@@ -16,6 +16,14 @@ import 'package:shopexpress/presentation/forgot_password_screen/binding/forgot_p
 import 'package:shopexpress/presentation/add_product_screen/add_product_screen.dart';
 import 'package:shopexpress/presentation/add_product_screen/binding/add_product_binding.dart';
 import 'package:shopexpress/presentation/splash_screen.dart';
+import 'package:shopexpress/presentation/manage_account_screen/binding/manage_account_binding.dart';
+import 'package:shopexpress/presentation/manage_account_screen/manage_account_screen.dart';
+import 'package:shopexpress/presentation/manage_item_slider_screen/manage_item_slider_screen.dart';
+import 'package:shopexpress/presentation/profile_screen/binding/profile_binding.dart';
+import 'package:shopexpress/presentation/profile_screen/profile_screen.dart';
+import 'package:shopexpress/presentation/manage_item_slider_screen/binding/manage_item_slider_binding.dart';
+import 'package:shopexpress/presentation/manage_product_screen/binding/manage_product_binding.dart';
+import 'package:shopexpress/presentation/manage_product_screen/manage_product_screen.dart';
 
 class AppRoutes {
   static String splashScreen = "/splash_screen";
@@ -27,6 +35,10 @@ class AppRoutes {
   static String addProductScreen = "/add_product_screen";
   static String productDetailScreen = "/product_detail_screen";
   static String searchProductScreen = "/search_product_screen";
+  static String profileScreen = "/profile_screen";
+  static String manageAccountScreen = "/manage_account_screen";
+  static String manageItemSliderScreen = "/manage_item_slider_screen";
+  static String manageProductScreen = "/manage_product_screen";
 
   static List<GetPage> pages = [
     GetPage(
@@ -73,6 +85,26 @@ class AppRoutes {
       name: searchProductScreen,
       page: () => SearchProductScreen(),
       bindings: [SearchProductBinding()],
+    ),
+    GetPage(
+      name: profileScreen,
+      page: () => ProfileScreen(),
+      bindings: [ProfileBinding()],
+    ),
+    GetPage(
+      name: manageAccountScreen,
+      page: () => ManageAccountScreen(),
+      bindings: [ManageAccountBinding()],
+    ),
+    GetPage(
+      name: manageItemSliderScreen,
+      page: () => ManageItemSliderScreen(),
+      bindings: [ManageItemSliderBinding()],
+    ),
+    GetPage(
+      name: manageProductScreen,
+      page: () => ManageProductScreen(),
+      bindings: [ManageProductBinding()],
     ),
   ];
 }

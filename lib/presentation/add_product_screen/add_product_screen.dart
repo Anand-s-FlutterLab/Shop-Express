@@ -277,6 +277,7 @@ class AddProductScreen extends GetWidget<AddProductController> {
                               SizedBox(height: Get.height * 0.02),
                           itemCount: controller.valueControllers.length),
                 ),
+                SizedBox(height: Get.height * 0.03),
                 Align(
                   alignment: Alignment.center,
                   child: GestureDetector(
@@ -358,7 +359,7 @@ class AddProductScreen extends GetWidget<AddProductController> {
       height: Get.height * 0.25,
       child: Obx(
         () => GestureDetector(
-          onVerticalDragCancel: () {
+          onLongPress: () {
             controller.productImages.removeAt(index);
           },
           onTap: () {

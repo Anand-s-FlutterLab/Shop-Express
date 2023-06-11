@@ -16,7 +16,7 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       title: 'Home',
     ),
     const TabItem(
-      icon: Icons.search_sharp,
+      icon: Icons.manage_accounts,
       title: 'Search',
     ),
     const TabItem(
@@ -65,17 +65,17 @@ class _BottomNavigationWidgetState extends State<BottomNavigationWidget> {
       debugPrint("Navigating to Home");
       Get.toNamed(AppRoutes.homeScreen);
     } else if (index == 1) {
-      debugPrint("Navigating to Search Option");
-      Get.toNamed(AppRoutes.searchProductScreen);
+      debugPrint("Navigating to Manage Account");
+      Get.toNamed(AppRoutes.manageAccountScreen);
     } else if (index == 2) {
       debugPrint("Navigating to Favourite options");
-      Get.toNamed(AppRoutes.homeScreen);
+      Get.toNamed(AppRoutes.searchProductScreen);
     } else if (index == 3) {
       debugPrint("Navigating Cart Options");
-      Get.toNamed(AppRoutes.addProductScreen);
+      Get.toNamed(AppRoutes.homeScreen);
     } else if (index == 4) {
       debugPrint("Navigating to Profile Options");
-      Get.toNamed(AppRoutes.homeScreen);
+      Get.toNamed(AppRoutes.profileScreen);
     }
   }
 }

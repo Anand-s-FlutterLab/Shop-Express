@@ -11,3 +11,4 @@ export 'package:shopexpress/core/Network/firebase_error_handler.dart';
 export 'package:shopexpress/theme/app_decoration.dart';
 export 'package:shopexpress/theme/app_style.dart';
 export 'package:shopexpress/core/Utils/globals.dart';
+export 'package:shopexpress/routes/app_routes.dart';
