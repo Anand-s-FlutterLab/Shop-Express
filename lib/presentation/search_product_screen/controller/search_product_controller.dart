@@ -5,22 +5,57 @@ class SearchProductController extends GetxController {
   int limit = 10;
   RxBool isLoading = false.obs;
   RxList<SearchProductModel> products = <SearchProductModel>[].obs;
+  TextEditingController searchController = TextEditingController();
 
-  void onInit(){
+  @override
+  void onInit() {
     super.onInit();
+    searchController.text = customSearch.value;
     getProductItems();
   }
 
   Future<void> getProductItems() async {
     isLoading.value = true;
     try {
-      QuerySnapshot querySnapshot =
-      await FirebaseFirestore.instance.collection('products').get();
+      products.clear();
+      int start = categoryRanges[selectedCategory.value]?.elementAt(0) ?? 0;
+      int end = categoryRanges[selectedCategory.value]?.elementAt(1) ?? 0;
+      if (!isSpecialOfferSelected.value && customSearch.value == "") {
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('products')
+            .where("productId", isGreaterThanOrEqualTo: start.toString())
+            .where("productId", isLessThanOrEqualTo: end.toString())
+            .get();
 
-      for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
-        SearchProductModel product =
-        SearchProductModel.fromFirestore(documentSnapshot.data() as Map<String, dynamic>);
-        products.add(product);
+        for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
+          SearchProductModel product = SearchProductModel.fromFirestore(
+              documentSnapshot.data() as Map<String, dynamic>);
+          products.add(product);
+        }
+      } else if (!isSpecialOfferSelected.value && customSearch.value != "") {
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('products')
+            .where("productName", isGreaterThanOrEqualTo: customSearch.value)
+            .where("productName",
+                isLessThanOrEqualTo: "${customSearch.value}\uf8ff")
+            .get();
+        for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
+          SearchProductModel product = SearchProductModel.fromFirestore(
+              documentSnapshot.data() as Map<String, dynamic>);
+          products.add(product);
+        }
+      } else {
+        isSpecialOfferSelected.value = false;
+        QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+            .collection('products')
+            .orderBy('productDiscount', descending: true)
+            .get();
+
+        for (DocumentSnapshot documentSnapshot in querySnapshot.docs) {
+          SearchProductModel product = SearchProductModel.fromFirestore(
+              documentSnapshot.data() as Map<String, dynamic>);
+          products.add(product);
+        }
       }
       isLoading.value = false;
     } catch (e) {

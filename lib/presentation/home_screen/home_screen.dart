@@ -13,9 +13,12 @@ class HomeScreen extends GetWidget<HomeScreenController> {
         child: SingleChildScrollView(
           child: Obx(
             () => controller.initialLoading.value
-                ? Center(
-                    child: LoadingAnimationWidget.fourRotatingDots(
-                        color: Colors.blue, size: 50),
+                ? SizedBox(
+                    height: Get.height,
+                    child: Center(
+                      child: LoadingAnimationWidget.fourRotatingDots(
+                          color: Colors.blue, size: 50),
+                    ),
                   )
                 : Column(
                     children: [
@@ -30,10 +33,18 @@ class HomeScreen extends GetWidget<HomeScreenController> {
                               width: Get.width - 30,
                               height: 50,
                               child: TextFormField(
+                                onChanged: (value) {
+                                  customSearch.value = value;
+                                },
+                                onFieldSubmitted: (value) {
+                                  controller.searchController.clear();
+                                  Get.toNamed(AppRoutes.searchProductScreen);
+                                },
                                 style: GoogleFonts.getFont(
                                   'Signika Negative',
                                   fontSize: Get.width * 0.05,
                                 ),
+                                controller: controller.searchController,
                                 decoration: InputDecoration(
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 12, horizontal: 16),
@@ -49,9 +60,20 @@ class HomeScreen extends GetWidget<HomeScreenController> {
                                   filled: true,
                                   prefixIcon:
                                       Icon(Icons.search, color: Colors.black),
-                                  suffixIcon: Icon(
-                                    Icons.clear,
-                                    color: Colors.black,
+                                  suffixIcon: Obx(
+                                    () => customSearch.value.isEmpty
+                                        ? SizedBox()
+                                        : GestureDetector(
+                                            onTap: () {
+                                              controller.searchController
+                                                  .clear();
+                                              customSearch.value = "";
+                                            },
+                                            child: Icon(
+                                              Icons.clear,
+                                              color: Colors.black,
+                                            ),
+                                          ),
                                   ),
                                   border: InputBorder.none,
                                   hintText: "Search Here",
@@ -115,19 +137,30 @@ class HomeScreen extends GetWidget<HomeScreenController> {
                           physics: const ClampingScrollPhysics(),
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemCount: controller.categoryImageModel.length ~/ 2,
-                          itemBuilder: (context, index) => SizedBox(
-                            width: 100,
-                            child: Column(
-                              children: [
-                                categoryImageBuilder(index * 2),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                categoryImageBuilder(index * 2 + 1),
-                              ],
-                            ),
-                          ),
+                          itemCount: (controller.categoryImageModel.length %
+                                      2 ==
+                                  0)
+                              ? controller.categoryImageModel.length ~/ 2
+                              : (controller.categoryImageModel.length ~/ 2) + 1,
+                          itemBuilder: (context, index) {
+                            final itemIndex = index * 2;
+
+                            if (itemIndex <
+                                controller.categoryImageModel.length) {
+                              return Column(
+                                children: [
+                                  categoryImageBuilder(itemIndex),
+                                  const SizedBox(height: 20),
+                                  if (itemIndex + 1 <
+                                      controller.categoryImageModel.length)
+                                    categoryImageBuilder(itemIndex + 1),
+                                ],
+                              );
+                            } else {
+                              return SizedBox
+                                  .shrink(); // Return an empty SizedBox for excess indices
+                            }
+                          },
                           separatorBuilder: (BuildContext context, int index) {
                             return SizedBox(
                               width: 10,
@@ -266,37 +299,49 @@ class HomeScreen extends GetWidget<HomeScreenController> {
   }
 
   Widget categoryImageBuilder(int index) {
-    return Container(
-      padding: const EdgeInsets.all(5),
-      height: Get.height * 0.13,
-      width: 90,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Colors.white,
-          boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 10)]),
-      child: Column(
-        children: [
-          CommonImageView(
-            url: controller.categoryImageModel[index].categoryImage,
-            height: 80,
-            width: 80,
-            fit: BoxFit.scaleDown,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          FittedBox(
-            fit: BoxFit.scaleDown,
-            child: Text(
-              controller.categoryImageModel[index].categoryName,
-              maxLines: 1,
-              style: GoogleFonts.getFont(
-                'Signika Negative',
-                fontSize: Get.width * 0.045,
+    return GestureDetector(
+      onTap: () => {
+        customSearch.value = "",
+        selectedCategory.value =
+            controller.categoryImageModel[index].categoryName,
+        if (selectedCategory.value == "Special Offer")
+          {isSpecialOfferSelected.value = true},
+        Get.toNamed(AppRoutes.searchProductScreen)
+      },
+      child: Container(
+        padding: const EdgeInsets.all(5),
+        height: Get.height * 0.13,
+        width: 90,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.white,
+            boxShadow: const [
+              BoxShadow(color: Colors.black12, blurRadius: 10)
+            ]),
+        child: Column(
+          children: [
+            CommonImageView(
+              url: controller.categoryImageModel[index].categoryImage,
+              height: 80,
+              width: 80,
+              fit: BoxFit.scaleDown,
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            FittedBox(
+              fit: BoxFit.scaleDown,
+              child: Text(
+                controller.categoryImageModel[index].categoryName,
+                maxLines: 1,
+                style: GoogleFonts.getFont(
+                  'Signika Negative',
+                  fontSize: Get.width * 0.045,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

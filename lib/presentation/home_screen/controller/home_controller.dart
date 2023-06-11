@@ -3,6 +3,7 @@ import 'package:shopexpress/presentation/home_screen/model/home_model.dart';
 
 class HomeScreenController extends GetxController {
   RxBool initialLoading = false.obs;
+  TextEditingController searchController = TextEditingController();
   RxList<ItemSliderModel> itemSliderModel = <ItemSliderModel>[].obs;
   RxList<CategoryImageModel> categoryImageModel = <CategoryImageModel>[].obs;
   RxList<ImageSliderModel> imageSliderModel = <ImageSliderModel>[].obs;
@@ -13,7 +14,6 @@ class HomeScreenController extends GetxController {
     fetchItemSliders();
     fetchCategoryImage();
     fetchImageSlider();
-
   }
 
   Future<void> fetchItemSliders() async {
@@ -52,7 +52,8 @@ class HomeScreenController extends GetxController {
     try {
       final QuerySnapshot snapshot = await FirebaseFirestore.instance
           .collection('products')
-          .orderBy('productDiscount', descending: true).limit(5)
+          .orderBy('productDiscount', descending: true)
+          .limit(5)
           .get();
 
       snapshot.docs.forEach((document) {
