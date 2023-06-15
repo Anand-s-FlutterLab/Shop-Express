@@ -133,202 +133,221 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
                       child: Padding(
                           padding: const EdgeInsets.all(24.0),
                           child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  controller.product.productBrand,
-                                  style: GoogleFonts.getFont(
-                                    'Signika Negative',
-                                    fontSize: Get.width * 0.03,
-                                  ),
-                                ),
-                                Text(
-                                  controller.product.productName,
-                                  style: GoogleFonts.getFont('Signika Negative',
-                                      fontSize: Get.width * 0.06,
-                                      fontWeight: FontWeight.w500),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                const SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "₹${controller.product.productDisplayPrice.toStringAsFixed(2)}",
-                                      style: GoogleFonts.getFont(
-                                        'Signika Negative',
-                                        fontSize: Get.width * 0.06,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: AnimationConfiguration.toStaggeredList(
+                                duration: const Duration(milliseconds: 375),
+                                childAnimationBuilder: (widget) =>
+                                    FadeInAnimation(
+                                      curve: Curves.fastLinearToSlowEaseIn,
+                                      duration: Duration(milliseconds: 500),
+                                      child: ScaleAnimation(
+                                        delay: Duration(milliseconds: 75),
+                                        scale: 1.5,
+                                        child: widget,
                                       ),
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    // Container(
-                                    //   decoration: BoxDecoration(
-                                    //       color: Colors.green.shade100,
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(15)),
-                                    //   child: Center(
-                                    //     child: Padding(
-                                    //       padding: const EdgeInsets.fromLTRB(
-                                    //           10, 5, 10, 5),
-                                    //       child: Text(
-                                    //         "${controller.product.productDiscount}% off",
-                                    //         style: GoogleFonts.getFont(
-                                    //           'Signika Negative',
-                                    //           color: Colors.green,
-                                    //           fontSize: Get.width * 0.045,
-                                    //         ),
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          // color: Colors.green.shade100.withOpacity(0.7),
-                                          gradient: LinearGradient(colors: [
-                                            Colors.blue.shade400,
-                                            Colors.blue.shade800,
-                                          ]),
-                                          borderRadius:
-                                              BorderRadius.circular(15)),
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            10, 5, 10, 5),
-                                        child: Text(
-                                          "${controller.product.productDiscount}% OFF",
-                                          style: GoogleFonts.getFont(
-                                            'Signika Negative',
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white,
-                                            fontSize: Get.width * 0.045,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        controller.product.productBrand,
+                                        style: GoogleFonts.getFont(
+                                          'Signika Negative',
+                                          fontSize: Get.width * 0.03,
+                                        ),
+                                      ),
+                                      Spacer(),
+                                      Obx(
+                                        () => GestureDetector(
+                                          onTap: () =>
+                                              controller.toggleFavorite(),
+                                          child: Icon(
+                                            controller.product.isFavorite.value
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: controller
+                                                    .product.isFavorite.value
+                                                ? Colors.red
+                                                : Colors.grey,
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 5,
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "M.R.P: ",
-                                      style: GoogleFonts.getFont(
-                                        'Signika Negative',
-                                        color: Colors.black.withOpacity(0.6),
-                                        fontSize: Get.width * 0.04,
-                                      ),
-                                    ),
-                                    Text(
-                                      "₹${controller.product.productPrice}",
-                                      style: GoogleFonts.getFont(
-                                        'Signika Negative',
-                                        decoration: TextDecoration.lineThrough,
-                                        color: Colors.black.withOpacity(0.6),
-                                        fontSize: Get.width * 0.04,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Theme(
-                                  data: Theme.of(context).copyWith(
-                                      dividerColor: Colors.transparent),
-                                  child: ExpansionTile(
-                                    tilePadding: EdgeInsets.zero,
-                                    childrenPadding: EdgeInsets.zero,
-                                    initiallyExpanded: true,
-                                    title: Text(
-                                      "Product Description:",
-                                      style: GoogleFonts.getFont(
+                                    ],
+                                  ),
+                                  Text(
+                                    controller.product.productName,
+                                    style: GoogleFonts.getFont(
                                         'Signika Negative',
                                         fontSize: Get.width * 0.06,
-                                      ),
-                                    ),
+                                        fontWeight: FontWeight.w500),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                  const SizedBox(height: 10),
+                                  Row(
                                     children: [
                                       Text(
-                                        controller.product.productDescription,
+                                        "₹${controller.product.productDisplayPrice.toStringAsFixed(2)}",
+                                        style: GoogleFonts.getFont(
+                                          'Signika Negative',
+                                          fontSize: Get.width * 0.06,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Container(
+                                        decoration: BoxDecoration(
+                                            gradient: LinearGradient(colors: [
+                                              Colors.blue.shade400,
+                                              Colors.blue.shade800,
+                                            ]),
+                                            borderRadius:
+                                                BorderRadius.circular(15)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              10, 5, 10, 5),
+                                          child: Text(
+                                            "${controller.product.productDiscount}% OFF",
+                                            style: GoogleFonts.getFont(
+                                              'Signika Negative',
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white,
+                                              fontSize: Get.width * 0.045,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(
+                                    height: 5,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "M.R.P: ",
                                         style: GoogleFonts.getFont(
                                           'Signika Negative',
                                           color: Colors.black.withOpacity(0.6),
-                                          fontSize: Get.width * 0.047,
+                                          fontSize: Get.width * 0.04,
                                         ),
-                                        textAlign: TextAlign.justify,
+                                      ),
+                                      Text(
+                                        "₹${controller.product.productPrice}",
+                                        style: GoogleFonts.getFont(
+                                          'Signika Negative',
+                                          decoration:
+                                              TextDecoration.lineThrough,
+                                          color: Colors.black.withOpacity(0.6),
+                                          fontSize: Get.width * 0.04,
+                                        ),
                                       ),
                                     ],
                                   ),
-                                ),
-                                Theme(
-                                  data: Theme.of(context).copyWith(
-                                      dividerColor: Colors.transparent),
-                                  child: ExpansionTile(
-                                    tilePadding: EdgeInsets.zero,
-                                    childrenPadding: EdgeInsets.zero,
-                                    initiallyExpanded: true,
-                                    title: Text(
-                                      "Product Details:",
-                                      style: GoogleFonts.getFont(
-                                        'Signika Negative',
-                                        fontSize: Get.width * 0.06,
+                                  Theme(
+                                    data: Theme.of(context).copyWith(
+                                        dividerColor: Colors.transparent),
+                                    child: ExpansionTile(
+                                      tilePadding: EdgeInsets.zero,
+                                      childrenPadding: EdgeInsets.zero,
+                                      initiallyExpanded: true,
+                                      title: Text(
+                                        "Product Description:",
+                                        style: GoogleFonts.getFont(
+                                          'Signika Negative',
+                                          fontSize: Get.width * 0.06,
+                                        ),
                                       ),
+                                      children: [
+                                        Text(
+                                          controller.product.productDescription,
+                                          style: GoogleFonts.getFont(
+                                            'Signika Negative',
+                                            color:
+                                                Colors.black.withOpacity(0.6),
+                                            fontSize: Get.width * 0.047,
+                                          ),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                      ],
                                     ),
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            border:
-                                                Border.all(color: Colors.grey)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              10.0, 10, 10, 0),
-                                          child: Column(
-                                            children: [
-                                              Column(
-                                                children: [
-                                                  _buildProductDetails(
-                                                      "Product Name",
-                                                      controller
-                                                          .product.productName),
-                                                  _buildProductDetails(
-                                                      "Brand Name",
-                                                      controller.product
-                                                          .productBrand),
-                                                  _buildProductDetails(
-                                                      "Product Category",
-                                                      controller.product
-                                                          .productCategory),
-                                                ],
-                                              ),
-                                              ListView.builder(
-                                                  shrinkWrap: true,
-                                                  physics:
-                                                      const ClampingScrollPhysics(),
-                                                  itemCount: controller.product
-                                                      .productDetails.length,
-                                                  itemBuilder: (context,
-                                                          index) =>
-                                                      _buildProductDetails(
-                                                          controller
-                                                              .product
-                                                              .productDetails
-                                                              .entries
-                                                              .elementAt(index)
-                                                              .key,
-                                                          controller
-                                                              .product
-                                                              .productDetails
-                                                              .entries
-                                                              .elementAt(index)
-                                                              .value)),
-                                            ],
+                                  ),
+                                  Theme(
+                                    data: Theme.of(context).copyWith(
+                                        dividerColor: Colors.transparent),
+                                    child: ExpansionTile(
+                                      tilePadding: EdgeInsets.zero,
+                                      childrenPadding: EdgeInsets.zero,
+                                      initiallyExpanded: true,
+                                      title: Text(
+                                        "Product Details:",
+                                        style: GoogleFonts.getFont(
+                                          'Signika Negative',
+                                          fontSize: Get.width * 0.06,
+                                        ),
+                                      ),
+                                      children: [
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                10.0, 10, 10, 0),
+                                            child: Column(
+                                              children: [
+                                                Column(
+                                                  children: [
+                                                    _buildProductDetails(
+                                                        "Product Name",
+                                                        controller.product
+                                                            .productName),
+                                                    _buildProductDetails(
+                                                        "Brand Name",
+                                                        controller.product
+                                                            .productBrand),
+                                                    _buildProductDetails(
+                                                        "Product Category",
+                                                        controller.product
+                                                            .productCategory),
+                                                  ],
+                                                ),
+                                                ListView.builder(
+                                                    shrinkWrap: true,
+                                                    physics:
+                                                        const ClampingScrollPhysics(),
+                                                    itemCount: controller
+                                                        .product
+                                                        .productDetails
+                                                        .length,
+                                                    itemBuilder: (context,
+                                                            index) =>
+                                                        _buildProductDetails(
+                                                            controller
+                                                                .product
+                                                                .productDetails
+                                                                .entries
+                                                                .elementAt(
+                                                                    index)
+                                                                .key,
+                                                            controller
+                                                                .product
+                                                                .productDetails
+                                                                .entries
+                                                                .elementAt(
+                                                                    index)
+                                                                .value)),
+                                              ],
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 75),
-                              ])))
+                                  const SizedBox(height: 75),
+                                ]),
+                          )))
                 ]),
                 _buldFloatBar()
               ])
@@ -364,7 +383,9 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
             color: Colors.transparent,
             child: InkWell(
               borderRadius: const BorderRadius.all(Radius.circular(29)),
-              onTap: () {},
+              onTap: () {
+                controller.addToCartFromProductDetails();
+              },
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -403,21 +424,16 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CounterButton(
-                  icon: const Icon(Icons.remove, color: Colors.white),
+                  icon: const Icon(Icons.remove, color: Colors.blue),
                   onItemSelected: () {
                     if (controller.currentQuantity.value > 1) {
                       controller.currentQuantity.value -= 1;
                     }
                   },
                 ),
-                const SizedBox(width: 3),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(3),
-                    border: Border.all(color: Colors.grey.shade600),
-                  ),
+                SizedBox(
                   height: 35,
-                  width: 45,
+                  width: 35,
                   child: Padding(
                     padding: const EdgeInsets.only(top: 6.0),
                     child: Obx(
@@ -442,9 +458,9 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 3),
                 CounterButton(
-                  icon: const Icon(Icons.add, color: Colors.white),
+                  isLeftButton: false,
+                  icon: const Icon(Icons.add, color: Colors.blue),
                   onItemSelected: () {
                     controller.currentQuantity.value += 1;
                   },

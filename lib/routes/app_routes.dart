@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
+import 'package:shopexpress/presentation/cart_screen/binding/cart_binding.dart';
+import 'package:shopexpress/presentation/cart_screen/cart_screen.dart';
 import 'package:shopexpress/presentation/email_verification_screen/binding/email_verification_binding.dart';
 import 'package:shopexpress/presentation/email_verification_screen/email_verification_screen.dart';
+import 'package:shopexpress/presentation/favorite_screen/binding/favorite_binding.dart';
+import 'package:shopexpress/presentation/favorite_screen/favorite_screen.dart';
 import 'package:shopexpress/presentation/forgot_password_screen/forgot_password_screen.dart';
 import 'package:shopexpress/presentation/home_screen/binding/home_binding.dart';
 import 'package:shopexpress/presentation/home_screen/home_screen.dart';
@@ -24,6 +28,7 @@ import 'package:shopexpress/presentation/profile_screen/profile_screen.dart';
 import 'package:shopexpress/presentation/manage_item_slider_screen/binding/manage_item_slider_binding.dart';
 import 'package:shopexpress/presentation/manage_product_screen/binding/manage_product_binding.dart';
 import 'package:shopexpress/presentation/manage_product_screen/manage_product_screen.dart';
+import 'package:shopexpress/presentation/error_screen.dart';
 
 class AppRoutes {
   static String splashScreen = "/splash_screen";
@@ -39,6 +44,15 @@ class AppRoutes {
   static String manageAccountScreen = "/manage_account_screen";
   static String manageItemSliderScreen = "/manage_item_slider_screen";
   static String manageProductScreen = "/manage_product_screen";
+  static String cartScreen = "/cart_screen";
+  static String favoriteScreen = "/favorite_screen";
+  static String errorScreen = "/error_screen";
+  static String editProfileScreen = "/edit_profile_screen";
+  static String ordersScreen = "/orders_screen";
+  static String savedAddressesScreen = "/saved_addresses_screen";
+  static String savedCardsScreen = "/saved_cards_screen";
+  static String walletScreen = "/wallet_screen";
+  static String customerSupportScreen = "/customer_support_screen";
 
   static List<GetPage> pages = [
     GetPage(
@@ -105,6 +119,21 @@ class AppRoutes {
       name: manageProductScreen,
       page: () => ManageProductScreen(),
       bindings: [ManageProductBinding()],
+    ),
+    GetPage(
+      name: cartScreen,
+      page: () => CartScreen(),
+      bindings: [CartBinding()],
+    ),
+    GetPage(
+      name: favoriteScreen,
+      page: () => FavoriteScreen(),
+      bindings: [FavoriteBinding()],
+    ),
+    GetPage(
+      name: errorScreen,
+      page: () => ErrorScreen(),
+      bindings: const [],
     ),
   ];
 }

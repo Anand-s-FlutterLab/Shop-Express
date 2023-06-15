@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shopexpress/core/app_export.dart';
+import 'package:shopexpress/presentation/home_screen/model/home_model.dart';
 import 'package:shopexpress/presentation/manage_item_slider_screen/model/manage_item_slider_model.dart';
 
 class ManageItemSliderController extends GetxController {
@@ -93,6 +94,19 @@ class ManageItemSliderController extends GetxController {
     }
   }
 
+  Future<void> editItemSlider(int index) async {
+    String imgUrl = await uploadImage();
+    final updatedItemSlider = ManageItemSliderModel(
+      productName: productNameController.text,
+      productId: productIDController.text,
+      productImage: imgUrl,
+    );
+
+    itemSliders[index] = updatedItemSlider;
+
+    Get.back();
+  }
+
   Future<void> getItemSliderDetails() async {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('Item Slider').get();
@@ -104,8 +118,7 @@ class ManageItemSliderController extends GetxController {
         return ManageItemSliderModel(
           productName: data['productName'] ?? '',
           productId: data['productId'] ?? '',
-          productImage:
-              data['productImage'] ?? '',
+          productImage: data['productImage'] ?? '',
         );
       } else {
         return ManageItemSliderModel(

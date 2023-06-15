@@ -1,10 +1,8 @@
 import 'dart:async';
-
-import 'package:get/get.dart';
-import 'package:flutter/material.dart';
+import 'package:shopexpress/core/Utils/common_utils.dart';
+import 'package:shopexpress/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shopexpress/core/Network/firebase_error_handler.dart';
-import 'package:shopexpress/routes/app_routes.dart';
+import 'package:shopexpress/presentation/signup_screen/model/signup_model.dart';
 
 class SignupController extends GetxController {
   final GlobalKey<FormState> signupFormKey = GlobalKey<FormState>();
@@ -12,7 +10,6 @@ class SignupController extends GetxController {
   TextEditingController lastNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  late Timer _timer;
   RxBool isSignupPressed = false.obs;
 
   Future<void> onSignup() async {
@@ -23,12 +20,14 @@ class SignupController extends GetxController {
             .createUserWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text)
             .then((userCredential) {
-          isSignupPressed.value = false;
+          userID.value = userCredential.user!.uid;
+          userID.refresh();
+          writeStorage(storageUserID, userID.value);
+          addNewUser();
           Get.offNamed(AppRoutes.emailVerificationScreen);
           return userCredential;
         }).catchError(
           (error) {
-            isSignupPressed.value = false;
             handleFirebaseError(error);
             return Future.error(error);
           },
@@ -36,7 +35,26 @@ class SignupController extends GetxController {
       }
     } else {
       isSignupPressed.value = false;
-      print("Failed");
+    }
+  }
+
+  Future<void> addNewUser() async {
+    try {
+      SignUpModel signUpData = SignUpModel(
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        emailAddress: emailController.text,
+      );
+      final DocumentReference productDoc = FirebaseFirestore.instance
+          .collection(collectionUsers)
+          .doc(userID.value);
+      await productDoc.set(signUpData.toJson()).then((value) {
+        isSignupPressed.value = false;
+      }).catchError((error) {
+        handleFirebaseError(error);
+      });
+    } catch (error) {
+      handleFirebaseError(error);
     }
   }
 }

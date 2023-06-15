@@ -1,6 +1,7 @@
 import 'package:shopexpress/core/app_export.dart';
 import 'package:shopexpress/presentation/manage_account_screen/controller/manage_account_controller.dart';
 import 'package:shopexpress/widgets/bottom_navigation_widget.dart';
+import 'package:shopexpress/widgets/common_image_view.dart';
 
 class ManageAccountScreen extends GetWidget<ManageAccountController> {
   @override
@@ -22,47 +23,52 @@ class ManageAccountScreen extends GetWidget<ManageAccountController> {
           ),
         ),
         centerTitle: true,
-        leading: GestureDetector(
-          onTap: () => Get.back(),
-          child: const Icon(Icons.arrow_back_ios, color: Colors.grey),
-        ),
       ),
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 10,
-            ),
-            buildOptionContainer(
-              Icons.add_circle,
-              "Add new product",
-              () => Get.toNamed(AppRoutes.addProductScreen),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            buildOptionContainer(
-              Icons.manage_history,
-              "Manage Item Slider",
-              () => Get.toNamed(AppRoutes.manageItemSliderScreen),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            buildOptionContainer(
-              Icons.manage_search,
-              "Manage Product",
-                  () => Get.toNamed(AppRoutes.manageProductScreen),
-            ),
-          ],
+        child: AnimationLimiter(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: AnimationConfiguration.toStaggeredList(
+                duration: const Duration(milliseconds: 375),
+                childAnimationBuilder: (widget) => FadeInAnimation(
+                  delay: Duration(milliseconds: 100),
+                  child: SlideAnimation(
+                    horizontalOffset: -50.0,
+                    delay: Duration(milliseconds: 60),
+                    child: widget,
+                  ),
+                ),
+                children: [
+                  SizedBox(
+                    height: 10,
+                  ),
+                  buildOptionContainer(
+                    0,
+                    () => Get.toNamed(AppRoutes.addProductScreen),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  buildOptionContainer(
+                    1,
+                    () => Get.toNamed(AppRoutes.manageItemSliderScreen),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  buildOptionContainer(
+                    2,
+                    () => Get.toNamed(AppRoutes.manageProductScreen),
+                  ),
+                ]),
+          ),
         ),
       ),
       bottomNavigationBar: BottomNavigationWidget(),
     );
   }
 
-  Widget buildOptionContainer(IconData icon, String text, VoidCallback onTap) {
+  Widget buildOptionContainer(int index, VoidCallback onTap) {
     return Center(
       child: GestureDetector(
         onTap: onTap,
@@ -77,12 +83,20 @@ class ManageAccountScreen extends GetWidget<ManageAccountController> {
           child: Row(
             children: [
               SizedBox(width: 10),
-              Icon(icon),
+              CommonImageView(
+                url: controller.items.entries.elementAt(index).value,
+                height: Get.width * 0.1,
+                width: Get.width * 0.1,
+                fit: BoxFit.cover,
+              ),
               SizedBox(width: 10),
-              Text(text, style: GoogleFonts.getFont(
-                'Signika Negative',
-                fontSize: Get.width * 0.05,
-              ),),
+              Text(
+                controller.items.entries.elementAt(index).key,
+                style: GoogleFonts.getFont(
+                  'Signika Negative',
+                  fontSize: Get.width * 0.05,
+                ),
+              ),
             ],
           ),
         ),

@@ -5,6 +5,11 @@ RxString globalProductID = "".obs;
 RxString selectedCategory = "All Products".obs;
 RxBool isSpecialOfferSelected = false.obs;
 RxString customSearch = "".obs;
+RxBool isImagePrecached = false.obs;
+RxInt cartItemNumber = 0.obs;
+RxBool isAdmin = false.obs;
+RxString userName = "".obs;
+RxString userID = "".obs;
 
 final Map<String, List<int>> categoryRanges = {
   'Mobile': [100001, 109999],

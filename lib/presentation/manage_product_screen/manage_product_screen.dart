@@ -13,7 +13,7 @@ class ManageProductScreen extends GetWidget<ManageProductController> {
         backgroundColor: Colors.white,
         elevation: 0,
         title: Text(
-          "Manage Item Slider",
+          "Product Management",
           style: GoogleFonts.getFont(
             'Signika Negative',
             textStyle: TextStyle(

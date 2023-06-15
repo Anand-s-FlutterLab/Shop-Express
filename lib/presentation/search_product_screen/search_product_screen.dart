@@ -1,6 +1,7 @@
 import 'package:shopexpress/core/app_export.dart';
 import 'package:shopexpress/presentation/search_product_screen/controller/search_product_controller.dart';
 import 'package:shopexpress/widgets/common_image_view.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
 class SearchProductScreen extends GetWidget<SearchProductController> {
   @override
@@ -81,12 +82,9 @@ class SearchProductScreen extends GetWidget<SearchProductController> {
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    CommonImageView(
-                                      url:
-                                          "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FnoResultFound.gif?alt=media&token=cd4e7c38-077e-41e4-ae50-1cd5568f05e0",
-                                    ),
+                                    CommonImageView(url: noResultFound),
                                     Text(
-                                      "No Result Found",
+                                      "Apologies, but your search yielded no fruitful outcomes.",
                                       style: GoogleFonts.getFont(
                                         'Signika Negative',
                                         fontSize: Get.width * 0.05,
@@ -95,250 +93,290 @@ class SearchProductScreen extends GetWidget<SearchProductController> {
                                   ],
                                 ),
                               )
-                            : Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 10,
+                            : AnimationLimiter(
+                                child: GridView.builder(
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    childAspectRatio: 0.74,
                                   ),
-                                  GridView.builder(
-                                    shrinkWrap: true,
-                                    physics: const BouncingScrollPhysics(),
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: 0.74,
-                                    ),
-                                    itemCount: controller.products.length,
-                                    itemBuilder: (context, index) {
-                                      return GestureDetector(
-                                        onTap: () {
-                                          globalProductID.value = controller
-                                              .products[index].productId;
-                                          Get.toNamed(
-                                              AppRoutes.productDetailScreen);
-                                        },
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                borderRadius:
-                                                    BorderRadius.circular(15),
-                                                boxShadow: const [
-                                                  BoxShadow(
-                                                      color: Colors.black12,
-                                                      blurRadius: 5)
-                                                ]),
-                                            child: Stack(
-                                              children: [
-                                                Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                  itemCount: controller.products.length,
+                                  itemBuilder: (context, index) {
+                                    return AnimationConfiguration.staggeredGrid(
+                                      position: index,
+                                      duration: Duration(milliseconds: 500),
+                                      columnCount: 2,
+                                      child: ScaleAnimation(
+                                        duration: Duration(milliseconds: 900),
+                                        curve: Curves.fastLinearToSlowEaseIn,
+                                        scale: 1.5,
+                                        child: FadeInAnimation(
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              globalProductID.value = controller
+                                                  .products[index].productId;
+                                              Get.toNamed(AppRoutes
+                                                  .productDetailScreen);
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(10),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    boxShadow: const [
+                                                      BoxShadow(
+                                                          color: Colors.black12,
+                                                          blurRadius: 5)
+                                                    ]),
+                                                child: Stack(
                                                   children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.all(
-                                                              8.0),
-                                                      child: Center(
-                                                        child: CommonImageView(
-                                                          url: controller
-                                                              .products[index]
-                                                              .displayImageLink,
-                                                          fit: BoxFit.contain,
-                                                          height: 120,
-                                                          width: 120,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      color:
-                                                          Colors.grey.shade300,
-                                                      height: 1,
-                                                    ),
                                                     Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        const SizedBox(
-                                                          height: 7,
-                                                        ),
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .only(
-                                                                  left: 13),
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                controller
-                                                                    .products[
-                                                                        index]
-                                                                    .productBrand,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .getFont(
-                                                                  'Signika Negative',
-                                                                  fontSize:
-                                                                      Get.width *
-                                                                          0.03,
-                                                                ),
-                                                              ),
-                                                              Text(
-                                                                controller
-                                                                    .products[
-                                                                        index]
-                                                                    .productName,
-                                                                style:
-                                                                    GoogleFonts
-                                                                        .getFont(
-                                                                  'Signika Negative',
-                                                                  fontSize:
-                                                                      Get.width *
-                                                                          0.05,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                                maxLines: 1,
-                                                                overflow:
-                                                                    TextOverflow
-                                                                        .ellipsis,
-                                                              ),
-                                                              const SizedBox(
-                                                                  height: 5),
-                                                              Row(
+                                                                  .all(8.0),
+                                                          child: Center(
+                                                            child:
+                                                                CommonImageView(
+                                                              url: controller
+                                                                  .products[
+                                                                      index]
+                                                                  .displayImageLink,
+                                                              fit: BoxFit
+                                                                  .contain,
+                                                              height: 120,
+                                                              width: 120,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          color: Colors
+                                                              .grey.shade300,
+                                                          height: 1,
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            const SizedBox(
+                                                              height: 7,
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 13),
+                                                              child: Column(
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
                                                                 children: [
                                                                   Text(
-                                                                    "₹${controller.products[index].productPrice}",
+                                                                    controller
+                                                                        .products[
+                                                                            index]
+                                                                        .productBrand,
                                                                     style: GoogleFonts
                                                                         .getFont(
                                                                       'Signika Negative',
-                                                                      decoration:
-                                                                          TextDecoration
-                                                                              .lineThrough,
-                                                                      color: Colors
-                                                                          .black
-                                                                          .withOpacity(
-                                                                              0.6),
                                                                       fontSize:
                                                                           Get.width *
-                                                                              0.04,
+                                                                              0.03,
                                                                     ),
                                                                   ),
-                                                                  const SizedBox(
-                                                                    width: 5,
-                                                                  ),
                                                                   Text(
-                                                                    "₹${controller.products[index].productDisplayPrice.toStringAsFixed(2)}",
+                                                                    controller
+                                                                        .products[
+                                                                            index]
+                                                                        .productName,
                                                                     style: GoogleFonts
                                                                         .getFont(
                                                                       'Signika Negative',
                                                                       fontSize:
                                                                           Get.width *
                                                                               0.05,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
                                                                     ),
+                                                                    maxLines: 1,
+                                                                    overflow:
+                                                                        TextOverflow
+                                                                            .ellipsis,
+                                                                  ),
+                                                                  const SizedBox(
+                                                                      height:
+                                                                          5),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "₹${controller.products[index].productPrice}",
+                                                                        style: GoogleFonts
+                                                                            .getFont(
+                                                                          'Signika Negative',
+                                                                          decoration:
+                                                                              TextDecoration.lineThrough,
+                                                                          color: Colors
+                                                                              .black
+                                                                              .withOpacity(0.6),
+                                                                          fontSize:
+                                                                              Get.width * 0.04,
+                                                                        ),
+                                                                      ),
+                                                                      const SizedBox(
+                                                                        width:
+                                                                            5,
+                                                                      ),
+                                                                      Text(
+                                                                        "₹${controller.products[index].productDisplayPrice.toStringAsFixed(2)}",
+                                                                        style: GoogleFonts
+                                                                            .getFont(
+                                                                          'Signika Negative',
+                                                                          fontSize:
+                                                                              Get.width * 0.05,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  const SizedBox(
+                                                                    height: 10,
                                                                   ),
                                                                 ],
                                                               ),
-                                                              const SizedBox(
-                                                                height: 10,
-                                                              ),
-                                                            ],
-                                                          ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     ),
-                                                  ],
-                                                ),
-                                                Positioned(
-                                                  top: 5,
-                                                  right: 10,
-                                                  child: Icon(
-                                                    Icons
-                                                        .favorite_border_rounded,
-                                                    color: Colors.black
-                                                        .withOpacity(0.4),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  top: 0,
-                                                  left: 0,
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                        gradient:
-                                                            LinearGradient(
-                                                                colors: [
-                                                              Colors.blue
-                                                                  .shade400,
-                                                              Colors.blue
-                                                                  .shade800,
-                                                            ]),
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        15),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        15))),
-                                                    child: Padding(
-                                                      padding: const EdgeInsets
-                                                          .fromLTRB(7, 3, 7, 3),
-                                                      child: Text(
-                                                        "${controller.products[index].productDiscount}% OFF",
-                                                        style:
-                                                            GoogleFonts.getFont(
-                                                          'Signika Negative',
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white,
-                                                          fontSize:
-                                                              Get.width * 0.035,
+                                                    Positioned(
+                                                      top: 5,
+                                                      right: 10,
+                                                      child: Obx(
+                                                        () => GestureDetector(
+                                                          onTap: () => controller
+                                                              .toggleFavorite(
+                                                                  index),
+                                                          child: Icon(
+                                                            controller
+                                                                    .products[
+                                                                        index]
+                                                                    .isFavorite
+                                                                    .value
+                                                                ? Icons.favorite
+                                                                : Icons
+                                                                    .favorite_border,
+                                                            color: controller
+                                                                    .products[
+                                                                        index]
+                                                                    .isFavorite
+                                                                    .value
+                                                                ? Colors.red
+                                                                : Colors.grey,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                                Positioned(
-                                                  bottom: 0,
-                                                  right: 0,
-                                                  child: Container(
-                                                    padding:
-                                                        const EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
-                                                        gradient:
-                                                            LinearGradient(
-                                                                colors: [
-                                                              Colors.blue
-                                                                  .shade400,
-                                                              Colors.blue
-                                                                  .shade800,
-                                                            ]),
-                                                        borderRadius:
-                                                            const BorderRadius
-                                                                    .only(
-                                                                bottomRight:
-                                                                    Radius
+                                                    Positioned(
+                                                      top: 0,
+                                                      left: 0,
+                                                      child: Container(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                        colors: [
+                                                                      Colors
+                                                                          .blue
+                                                                          .shade400,
+                                                                      Colors
+                                                                          .blue
+                                                                          .shade800,
+                                                                    ]),
+                                                                borderRadius: BorderRadius.only(
+                                                                    topLeft: Radius
                                                                         .circular(
                                                                             15),
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        15))),
-                                                    child: const Icon(
-                                                      Icons.add,
-                                                      color: Colors.white,
+                                                                    bottomRight:
+                                                                        Radius.circular(
+                                                                            15))),
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  7, 3, 7, 3),
+                                                          child: Text(
+                                                            "${controller.products[index].productDiscount}% OFF",
+                                                            style: GoogleFonts
+                                                                .getFont(
+                                                              'Signika Negative',
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize:
+                                                                  Get.width *
+                                                                      0.035,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
+                                                    Positioned(
+                                                      bottom: 0,
+                                                      right: 0,
+                                                      child: GestureDetector(
+                                                        onTap: () => controller
+                                                            .addToCartFromSearchProduct(
+                                                                index),
+                                                        child: Container(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .all(5),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                                  gradient:
+                                                                      LinearGradient(
+                                                                          colors: [
+                                                                        Colors
+                                                                            .blue
+                                                                            .shade400,
+                                                                        Colors
+                                                                            .blue
+                                                                            .shade800,
+                                                                      ]),
+                                                                  borderRadius: const BorderRadius
+                                                                          .only(
+                                                                      bottomRight:
+                                                                          Radius.circular(
+                                                                              15),
+                                                                      topLeft: Radius
+                                                                          .circular(
+                                                                              15))),
+                                                          child: const Icon(
+                                                            Icons.add,
+                                                            color: Colors.white,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      );
-                                    },
-                                  ),
-                                ],
+                                      ),
+                                    );
+                                  },
+                                ),
                               ),
                       ],
                     ),

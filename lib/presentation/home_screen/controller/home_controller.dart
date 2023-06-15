@@ -1,6 +1,9 @@
 import 'package:shopexpress/core/app_export.dart';
 import 'package:shopexpress/presentation/home_screen/model/home_model.dart';
 
+import 'package:shopexpress/presentation/cart_screen/model/cart_model.dart';
+import 'package:shopexpress/presentation/cart_screen/controller/cart_controller.dart';
+
 class HomeScreenController extends GetxController {
   RxBool initialLoading = false.obs;
   TextEditingController searchController = TextEditingController();
@@ -66,5 +69,37 @@ class HomeScreenController extends GetxController {
       initialLoading.value = false;
       print('Error fetching Image Slider: $error');
     }
+  }
+
+  void toggleFavorite(int index) async {
+    imageSliderModel[index].isFavorite.value = !imageSliderModel[index].isFavorite.value;
+
+    await updateFavoriteStatus(
+        imageSliderModel[index].productId, imageSliderModel[index].isFavorite.value);
+  }
+
+  Future<void> updateFavoriteStatus(String productId, bool isFavorite) async {
+    try {
+      await FirebaseFirestore.instance
+          .collection('products')
+          .doc(productId)
+          .update({'isFavorite': isFavorite});
+    } catch (e) {
+      print('Error updating favorite status: $e');
+    }
+  }
+
+  void addToCartFromHomeImageSlider(int index) {
+    final cartItem = CartItem(
+      productId: imageSliderModel[index].productId,
+      productName: imageSliderModel[index].productName,
+      productBrand: imageSliderModel[index].productBrand,
+      productDisplayPrice: imageSliderModel[index].productDisplayPrice,
+      productQuantity: 1.obs,
+      displayImageLink: imageSliderModel[index].displayImageLink,
+    );
+
+    final cartController = Get.find<CartController>();
+    cartController.addItemToCart(cartItem);
   }
 }

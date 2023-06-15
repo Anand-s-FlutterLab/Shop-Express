@@ -130,42 +130,58 @@ class HomeScreen extends GetWidget<HomeScreenController> {
                         ),
                       ),
                       const Divider(),
-                      SizedBox(
-                        height: Get.height * 0.31,
-                        child: ListView.separated(
-                          padding: const EdgeInsets.all(10),
-                          physics: const ClampingScrollPhysics(),
-                          shrinkWrap: true,
-                          scrollDirection: Axis.horizontal,
-                          itemCount: (controller.categoryImageModel.length %
-                                      2 ==
-                                  0)
-                              ? controller.categoryImageModel.length ~/ 2
-                              : (controller.categoryImageModel.length ~/ 2) + 1,
-                          itemBuilder: (context, index) {
-                            final itemIndex = index * 2;
+                      AnimationLimiter(
+                        child: SizedBox(
+                          height: Get.height * 0.31,
+                          child: ListView.separated(
+                            padding: const EdgeInsets.all(10),
+                            physics: const ClampingScrollPhysics(),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.horizontal,
+                            itemCount:
+                                (controller.categoryImageModel.length % 2 == 0)
+                                    ? controller.categoryImageModel.length ~/ 2
+                                    : (controller.categoryImageModel.length ~/
+                                            2) +
+                                        1,
+                            itemBuilder: (context, index) {
+                              final itemIndex = index * 2;
 
-                            if (itemIndex <
-                                controller.categoryImageModel.length) {
-                              return Column(
-                                children: [
-                                  categoryImageBuilder(itemIndex),
-                                  const SizedBox(height: 20),
-                                  if (itemIndex + 1 <
-                                      controller.categoryImageModel.length)
-                                    categoryImageBuilder(itemIndex + 1),
-                                ],
+                              if (itemIndex <
+                                  controller.categoryImageModel.length) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: SlideAnimation(
+                                    duration: Duration(milliseconds: 600),
+                                    horizontalOffset: -50.0,
+                                    child: FadeInAnimation(
+                                      delay: Duration(milliseconds: 100),
+                                      child: Column(
+                                        children: [
+                                          categoryImageBuilder(itemIndex),
+                                          const SizedBox(height: 20),
+                                          if (itemIndex + 1 <
+                                              controller
+                                                  .categoryImageModel.length)
+                                            categoryImageBuilder(itemIndex + 1),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return SizedBox
+                                    .shrink(); // Return an empty SizedBox for excess indices
+                              }
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                width: 10,
                               );
-                            } else {
-                              return SizedBox
-                                  .shrink(); // Return an empty SizedBox for excess indices
-                            }
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return SizedBox(
-                              width: 10,
-                            );
-                          },
+                            },
+                          ),
                         ),
                       ),
                       const SizedBox(
@@ -181,110 +197,210 @@ class HomeScreen extends GetWidget<HomeScreenController> {
                       ),
                       const Divider(),
                       SizedBox(
-                        height: 251,
-                        child: ListView.separated(
-                            padding: const EdgeInsets.only(
-                                left: 8, right: 8, top: 8.0, bottom: 8.0),
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  globalProductID.value = controller
-                                      .imageSliderModel[index].productId;
-                                  Get.toNamed(AppRoutes.productDetailScreen);
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                          color: Colors.black12, blurRadius: 7)
-                                    ],
-                                  ),
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(15.0),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(7, 7, 7, 7),
-                                          color: Colors.white,
-                                          child: CommonImageView(
-                                            url: controller
-                                                .imageSliderModel[index]
-                                                .displayImageLink,
-                                            fit: BoxFit.fitWidth,
-                                            height: 150,
-                                            width: 150,
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 1,
-                                          color: Colors.grey,
-                                        ),
-                                        Container(
-                                          padding:
-                                              EdgeInsets.fromLTRB(5, 5, 5, 5),
-                                          height: 70,
-                                          width: 164,
-                                          decoration: BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                                bottomRight:
-                                                    Radius.circular(15),
-                                                bottomLeft:
-                                                    Radius.circular(15)),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                controller
-                                                    .imageSliderModel[index]
-                                                    .productBrand,
-                                                style: GoogleFonts.getFont(
-                                                  'Signika Negative',
-                                                  fontSize: Get.width * 0.04,
+                        height: 255,
+                        child: AnimationLimiter(
+                          child: ListView.separated(
+                              padding: const EdgeInsets.only(
+                                  left: 8, right: 8, top: 8.0, bottom: 8.0),
+                              physics: const BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredList(
+                                  position: index,
+                                  duration: const Duration(milliseconds: 375),
+                                  child: ScaleAnimation(
+                                    duration: Duration(milliseconds: 900),
+                                    curve: Curves.fastLinearToSlowEaseIn,
+                                    scale: 1.5,
+                                    child: FadeInAnimation(
+                                      child: Stack(
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              globalProductID.value = controller
+                                                  .imageSliderModel[index]
+                                                  .productId;
+                                              Get.toNamed(AppRoutes
+                                                  .productDetailScreen);
+                                            },
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                      color: Colors.black12,
+                                                      blurRadius: 7)
+                                                ],
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(15.0),
+                                                child: Column(
+                                                  children: [
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              7, 7, 7, 7),
+                                                      color: Colors.white,
+                                                      child: CommonImageView(
+                                                        url: controller
+                                                            .imageSliderModel[
+                                                                index]
+                                                            .displayImageLink,
+                                                        fit: BoxFit.fitWidth,
+                                                        height: 150,
+                                                        width: 150,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      height: 1,
+                                                      color: Colors.grey,
+                                                    ),
+                                                    Container(
+                                                      padding:
+                                                          EdgeInsets.fromLTRB(
+                                                              5, 5, 5, 5),
+                                                      height: 74,
+                                                      width: 164,
+                                                      decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                bottomRight:
+                                                                    Radius
+                                                                        .circular(
+                                                                            15),
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        15)),
+                                                      ),
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Text(
+                                                            controller
+                                                                .imageSliderModel[
+                                                                    index]
+                                                                .productBrand,
+                                                            style: GoogleFonts
+                                                                .getFont(
+                                                              'Signika Negative',
+                                                              fontSize:
+                                                                  Get.width *
+                                                                      0.04,
+                                                            ),
+                                                          ),
+                                                          FittedBox(
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                            child: Text(
+                                                              controller
+                                                                  .imageSliderModel[
+                                                                      index]
+                                                                  .productName,
+                                                              style: GoogleFonts
+                                                                  .getFont(
+                                                                'Signika Negative',
+                                                                fontSize:
+                                                                    Get.width *
+                                                                        0.06,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          FittedBox(
+                                                            fit: BoxFit
+                                                                .scaleDown,
+                                                            child: Text(
+                                                              "Price: ₹${controller.imageSliderModel[index].productDisplayPrice.toStringAsFixed(2)}",
+                                                              style: GoogleFonts
+                                                                  .getFont(
+                                                                'Signika Negative',
+                                                                fontSize:
+                                                                    Get.width *
+                                                                        0.05,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
                                               ),
-                                              FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
+                                            ),
+                                          ),
+                                          Positioned(
+                                            top: 5,
+                                            right: 10,
+                                            child: Obx(
+                                              () => GestureDetector(
+                                                onTap: () => controller
+                                                    .toggleFavorite(index),
+                                                child: Icon(
                                                   controller
-                                                      .imageSliderModel[index]
-                                                      .productName,
-                                                  style: GoogleFonts.getFont(
-                                                    'Signika Negative',
-                                                    fontSize: Get.width * 0.06,
-                                                  ),
+                                                          .imageSliderModel[
+                                                              index]
+                                                          .isFavorite
+                                                          .value
+                                                      ? Icons.favorite
+                                                      : Icons.favorite_border,
+                                                  color: controller
+                                                          .imageSliderModel[
+                                                              index]
+                                                          .isFavorite
+                                                          .value
+                                                      ? Colors.red
+                                                      : Colors.grey,
                                                 ),
                                               ),
-                                              FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  "Price: ₹${controller.imageSliderModel[index].productDisplayPrice.toStringAsFixed(2)}",
-                                                  style: GoogleFonts.getFont(
-                                                    'Signika Negative',
-                                                    fontSize: Get.width * 0.05,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        )
-                                      ],
+                                          Positioned(
+                                            bottom: 0,
+                                            right: 0,
+                                            child: GestureDetector(
+                                              onTap: () => controller
+                                                  .addToCartFromHomeImageSlider(
+                                                      index),
+                                              child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(5),
+                                                decoration: BoxDecoration(
+                                                    gradient:
+                                                        LinearGradient(colors: [
+                                                      Colors.blue.shade400,
+                                                      Colors.blue.shade800,
+                                                    ]),
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                            bottomRight:
+                                                                Radius.circular(
+                                                                    15),
+                                                            topLeft:
+                                                                Radius.circular(
+                                                                    15))),
+                                                child: const Icon(
+                                                  Icons.add,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (context, index) =>
-                                const SizedBox(
-                                  width: 15,
-                                ),
-                            itemCount: controller.imageSliderModel.length),
+                                );
+                              },
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                    width: 15,
+                                  ),
+                              itemCount: controller.imageSliderModel.length),
+                        ),
                       ),
                       SizedBox(
                         height: 10,

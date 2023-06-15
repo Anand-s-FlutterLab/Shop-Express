@@ -1,10 +1,6 @@
 import 'package:shopexpress/core/app_export.dart';
 import 'package:shopexpress/presentation/login_screen/controller/login_controller.dart';
-
-import 'package:shopexpress/theme/app_decoration.dart';
-
 import 'package:shopexpress/core/Utils/validation_function.dart';
-import 'package:shopexpress/routes/app_routes.dart';
 
 class LoginScreen extends GetWidget<LoginController> {
   @override
@@ -130,17 +126,19 @@ class LoginScreen extends GetWidget<LoginController> {
                                   ],
                                 )),
                             child: Center(
-                              child: controller.isLoginPressed.value
-                                  ? LoadingAnimationWidget.threeArchedCircle(
-                                      color: Colors.white,
-                                      size: Get.width * 0.1)
-                                  : Text(
-                                      "Login",
-                                      style: GoogleFonts.getFont(
-                                          'Signika Negative',
-                                          color: Colors.white,
-                                          fontSize: Get.width * 0.06),
-                                    ),
+                              child: Obx(
+                                () => controller.isLoginPressed.value
+                                    ? LoadingAnimationWidget.threeArchedCircle(
+                                        color: Colors.white,
+                                        size: Get.width * 0.1)
+                                    : Text(
+                                        "Login",
+                                        style: GoogleFonts.getFont(
+                                            'Signika Negative',
+                                            color: Colors.white,
+                                            fontSize: Get.width * 0.06),
+                                      ),
+                              ),
                             ),
                           ),
                         ),

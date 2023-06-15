@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class ItemSliderModel {
   String productName;
   String productId;
@@ -41,6 +43,7 @@ class ImageSliderModel {
   String displayImageLink;
   String productBrand;
   double productDisplayPrice;
+  final RxBool isFavorite;
 
   ImageSliderModel({
     required this.productName,
@@ -48,14 +51,17 @@ class ImageSliderModel {
     required this.displayImageLink,
     required this.productBrand,
     required this.productDisplayPrice,
-  });
+    bool isFavorite = false,
+  }) : isFavorite = isFavorite.obs;
 
   factory ImageSliderModel.fromJson(Map<String, dynamic> json) {
     return ImageSliderModel(
-        productName: json['productName'],
-        productId: json['productId'],
-        displayImageLink: json['displayImageLink'],
-        productBrand: json['productBrand'],
-        productDisplayPrice: json['productDisplayPrice']);
+      productName: json['productName'],
+      productId: json['productId'],
+      displayImageLink: json['displayImageLink'],
+      productBrand: json['productBrand'],
+      productDisplayPrice: json['productDisplayPrice'],
+      isFavorite: json['isFavorite'] ?? false,
+    );
   }
 }
