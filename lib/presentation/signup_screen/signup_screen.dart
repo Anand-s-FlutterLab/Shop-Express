@@ -108,24 +108,65 @@ class SignupScreen extends GetWidget<SignupController> {
                       Container(
                         width: Get.width - 75,
                         decoration: AppDecoration.inputBoxDecorationShaddow(),
-                        child: TextFormField(
-                            style: GoogleFonts.getFont('Signika Negative',
-                                fontSize: Get.width * 0.05),
-                            maxLines: null,
-                            keyboardType: TextInputType.visiblePassword,
-                            decoration: AppDecoration()
-                                .textInputDecoration("Password", 'Password'),
-                            focusNode: FocusNode(),
-                            controller: controller.passwordController,
-                            validator: (value) {
-                              if (value == null || value.trim().isEmpty) {
-                                return "Please provide Password";
-                              }
-                              if (!passwordValidator.hasMatch(value)) {
-                                return 'Enter Valid Password';
-                              }
-                              return null;
-                            }),
+                        child: Obx(
+                          () => TextFormField(
+                              style: GoogleFonts.getFont('Signika Negative',
+                                  fontSize: Get.width * 0.05),
+                              keyboardType: TextInputType.visiblePassword,
+                              obscureText: controller.obscureText.value,
+                              decoration: InputDecoration(
+                                labelText: "Password",
+                                suffix: GestureDetector(
+                                  onTap: () {
+                                    controller.obscureText.toggle();
+                                  },
+                                  child: controller.obscureText.value
+                                      ? Icon(Icons.visibility_off_outlined)
+                                      : Icon(Icons.visibility_outlined),
+                                ),
+                                labelStyle: GoogleFonts.getFont(
+                                    'Signika Negative',
+                                    fontSize: Get.width * 0.05),
+                                hintText: "Password",
+                                hintStyle: GoogleFonts.getFont(
+                                    'Signika Negative',
+                                    fontSize: Get.width * 0.05),
+                                errorStyle: GoogleFonts.getFont(
+                                    'Signika Negative',
+                                    fontSize: Get.width * 0.05),
+                                fillColor: Colors.white,
+                                filled: true,
+                                contentPadding:
+                                const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(color: Colors.grey)),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color: Colors.grey.shade400)),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                        color: Colors.red, width: 2.0)),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                        color: Colors.red, width: 2.0)),
+                              ),
+                              focusNode: FocusNode(),
+                              controller: controller.passwordController,
+                              validator: (value) {
+                                if (value == null || value.trim().isEmpty) {
+                                  return "Please provide Password";
+                                }
+                                if (!passwordValidator.hasMatch(value)) {
+                                  return 'Enter Valid Password';
+                                }
+                                return null;
+                              }),
+                        ),
                       ),
                       const SizedBox(
                         height: 30,

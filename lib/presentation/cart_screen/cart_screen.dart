@@ -42,12 +42,19 @@ class CartScreen extends StatelessWidget {
                         url: emptyCartUrl,
                         fit: BoxFit.cover,
                       ),
-                      SizedBox(height: 10),
-                      Text(
-                        "Your Cart is Waiting to be Filled",
-                        style: GoogleFonts.getFont(
-                          'Signika Negative',
-                          fontSize: Get.width * 0.07,
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: FittedBox(
+                          fit: BoxFit.fitWidth,
+                          child: Text(
+                            "Your Cart is Waiting to be Filled",
+                            maxLines: 1,
+                            style: GoogleFonts.getFont(
+                              'Signika Negative',
+                              color: Colors.grey,
+                              fontSize: Get.width * 0.07,
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -87,24 +94,28 @@ class CartScreen extends StatelessWidget {
                                         Container(
                                           decoration: BoxDecoration(
                                               color: Colors.white,
-                                              borderRadius: BorderRadius.circular(15),
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
                                               boxShadow: [
                                                 BoxShadow(
                                                     color: Colors.black12,
                                                     blurRadius: 10)
                                               ]),
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 5.0),
+                                            padding: const EdgeInsets.only(
+                                                left: 5.0),
                                             child: Row(
                                               children: [
                                                 Container(
                                                   decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius:
-                                                          BorderRadius.circular(15)),
+                                                          BorderRadius.circular(
+                                                              15)),
                                                   padding: EdgeInsets.all(2),
                                                   child: CommonImageView(
-                                                    url: controller.cartItems[index]
+                                                    url: controller
+                                                        .cartItems[index]
                                                         .displayImageLink,
                                                     fit: BoxFit.contain,
                                                     height: 150,
@@ -113,27 +124,38 @@ class CartScreen extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: Padding(
-                                                    padding: EdgeInsets.only(left: 15),
+                                                    padding: EdgeInsets.only(
+                                                        left: 15),
                                                     child: Column(
                                                       mainAxisAlignment:
-                                                          MainAxisAlignment.start,
+                                                          MainAxisAlignment
+                                                              .start,
                                                       crossAxisAlignment:
-                                                          CrossAxisAlignment.start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
-                                                          controller.cartItems[index]
+                                                          controller
+                                                              .cartItems[index]
                                                               .productBrand,
-                                                          style: GoogleFonts.getFont(
+                                                          style: GoogleFonts
+                                                              .getFont(
                                                             'Signika Negative',
-                                                            fontSize: Get.width * 0.04,
+                                                            fontSize:
+                                                                Get.width *
+                                                                    0.04,
                                                           ),
                                                         ),
                                                         Text(
-                                                          controller.cartItems[index]
+                                                          controller
+                                                              .cartItems[index]
                                                               .productName,
-                                                          style: GoogleFonts.getFont(
+                                                          style: GoogleFonts
+                                                              .getFont(
                                                             'Signika Negative',
-                                                            fontSize: Get.width * 0.06,
+                                                            fontSize:
+                                                                Get.width *
+                                                                    0.06,
                                                           ),
                                                         ),
                                                         SizedBox(
@@ -144,21 +166,28 @@ class CartScreen extends StatelessWidget {
                                                             CounterButton(
                                                               icon: const Icon(
                                                                   Icons.remove,
-                                                                  color: Colors.blue),
-                                                              onItemSelected: () {
+                                                                  color: Colors
+                                                                      .blue),
+                                                              onItemSelected:
+                                                                  () {
                                                                 if (controller
                                                                         .cartItems[
                                                                             index]
                                                                         .productQuantity >
                                                                     1) {
                                                                   controller
-                                                                      .cartItems[index]
+                                                                      .cartItems[
+                                                                          index]
                                                                       .productQuantity -= 1;
                                                                   controller
                                                                       .updateProductFinalPrice(
                                                                           index);
                                                                   controller
                                                                       .updateCartTotal();
+                                                                } else {
+                                                                  controller
+                                                                      .removeItemFromCart(
+                                                                          index);
                                                                 }
                                                               },
                                                             ),
@@ -168,9 +197,12 @@ class CartScreen extends StatelessWidget {
                                                               child: Padding(
                                                                 padding:
                                                                     const EdgeInsets
-                                                                        .only(top: 6.0),
+                                                                            .only(
+                                                                        top:
+                                                                            6.0),
                                                                 child: Obx(
-                                                                  () => TextFormField(
+                                                                  () =>
+                                                                      TextFormField(
                                                                     controller: controller
                                                                         .cartItems[
                                                                             index]
@@ -184,18 +216,22 @@ class CartScreen extends StatelessWidget {
                                                                     keyboardType:
                                                                         TextInputType
                                                                             .number,
-                                                                    textAlign: TextAlign
-                                                                        .center,
+                                                                    textAlign:
+                                                                        TextAlign
+                                                                            .center,
                                                                     textAlignVertical:
                                                                         TextAlignVertical
                                                                             .center,
                                                                     decoration:
                                                                         const InputDecoration
                                                                             .collapsed(
-                                                                      filled: true,
+                                                                      filled:
+                                                                          true,
                                                                       fillColor:
-                                                                          Colors.white,
-                                                                      hintText: '',
+                                                                          Colors
+                                                                              .white,
+                                                                      hintText:
+                                                                          '',
                                                                     ),
                                                                     style: GoogleFonts
                                                                         .getFont(
@@ -209,13 +245,17 @@ class CartScreen extends StatelessWidget {
                                                               ),
                                                             ),
                                                             CounterButton(
-                                                              isLeftButton: false,
+                                                              isLeftButton:
+                                                                  false,
                                                               icon: const Icon(
                                                                   Icons.add,
-                                                                  color: Colors.blue),
-                                                              onItemSelected: () {
+                                                                  color: Colors
+                                                                      .blue),
+                                                              onItemSelected:
+                                                                  () {
                                                                 controller
-                                                                    .cartItems[index]
+                                                                    .cartItems[
+                                                                        index]
                                                                     .productQuantity += 1;
                                                                 controller
                                                                     .updateProductFinalPrice(
@@ -232,10 +272,12 @@ class CartScreen extends StatelessWidget {
                                                         Obx(
                                                           () => Text(
                                                             "₹ ${controller.cartItems[index].productFinalPrice.value.toStringAsFixed(2)}",
-                                                            style: GoogleFonts.getFont(
+                                                            style: GoogleFonts
+                                                                .getFont(
                                                               'Signika Negative',
                                                               fontSize:
-                                                                  Get.width * 0.055,
+                                                                  Get.width *
+                                                                      0.055,
                                                             ),
                                                           ),
                                                         ),
@@ -252,7 +294,8 @@ class CartScreen extends StatelessWidget {
                                           bottom: 0,
                                           child: GestureDetector(
                                             onTap: () {
-                                              controller.removeItemFromCart(index);
+                                              controller
+                                                  .removeItemFromCart(index);
                                             },
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -263,8 +306,9 @@ class CartScreen extends StatelessWidget {
                                                 ),
                                               ),
                                               child: Padding(
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    10.0, 10, 10, 5),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10.0, 10, 10, 5),
                                                 child: Icon(
                                                   Icons.delete,
                                                   color: Colors.red,
@@ -279,7 +323,8 @@ class CartScreen extends StatelessWidget {
                                 ),
                               );
                             },
-                            separatorBuilder: (BuildContext context, int index) {
+                            separatorBuilder:
+                                (BuildContext context, int index) {
                               return SizedBox(
                                 height: 10,
                               );
@@ -401,6 +446,65 @@ class CartScreen extends StatelessWidget {
                                             fontWeight: FontWeight.bold),
                                       )
                                     ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Container(
+                          color: Colors.grey.shade300,
+                          height: 1,
+                          width: double.infinity,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          height: 58,
+                          decoration: BoxDecoration(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(29)),
+                            gradient: LinearGradient(colors: [
+                              Colors.blue.shade400,
+                              Colors.blue.shade800
+                            ]),
+                            boxShadow: [
+                              BoxShadow(
+                                offset: const Offset(4, 8),
+                                blurRadius: 20,
+                                color:
+                                    const Color(0xFF101010).withOpacity(0.25),
+                              ),
+                            ],
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: InkWell(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(29)),
+                              onTap: () {
+                                Get.toNamed(AppRoutes.checkoutScreen);
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(
+                                    Icons.shopping_cart_checkout_rounded,
+                                    color: Colors.white,
+                                    size: Get.width * 0.07,
+                                  ),
+                                  const SizedBox(width: 16),
+                                  Text(
+                                    'Checkout',
+                                    style: GoogleFonts.getFont(
+                                      'Signika Negative',
+                                      color: Colors.white,
+                                      fontSize: Get.width * 0.06,
+                                    ),
                                   ),
                                 ],
                               ),

@@ -12,7 +12,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
           child: CustomScrollView(
         slivers: [
           SliverAppBar(
-            pinned: true,
+            backgroundColor: const Color.fromRGBO(203, 207, 250, 1),
             expandedHeight: Get.height * 0.4,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
@@ -31,11 +31,15 @@ class ProfileScreen extends GetWidget<ProfileController> {
                         borderRadius: BorderRadius.circular(15),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: CommonImageView(
-                            url: defaultProfileImage,
-                            height: 100,
-                            width: 100,
-                            fit: BoxFit.scaleDown,
+                          child: Obx(
+                            () => CommonImageView(
+                              url: controller.profileURL.isEmpty
+                                  ? defaultProfileImage
+                                  : controller.profileURL.value,
+                              height: 100,
+                              width: 100,
+                              fit: BoxFit.scaleDown,
+                            ),
                           ),
                         ),
                       ),
@@ -43,13 +47,15 @@ class ProfileScreen extends GetWidget<ProfileController> {
                     const SizedBox(
                       height: 10,
                     ),
-                    Text(
-                      userName.value,
-                      style: GoogleFonts.getFont(
-                        'Signika Negative',
-                        color: Colors.blue.shade600,
-                        fontWeight: FontWeight.w500,
-                        fontSize: Get.width * 0.1,
+                    Obx(
+                      () => Text(
+                        userName.value,
+                        style: GoogleFonts.getFont(
+                          'Signika Negative',
+                          color: Colors.blue.shade600,
+                          fontWeight: FontWeight.w500,
+                          fontSize: Get.width * 0.1,
+                        ),
                       ),
                     )
                   ],
@@ -60,9 +66,9 @@ class ProfileScreen extends GetWidget<ProfileController> {
           SliverToBoxAdapter(
             child: Obx(
               () => Container(
-                padding:
-                    EdgeInsets.only(left: 20, right: 20, top: 30, bottom: 20),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.only(
+                    left: 20, right: 20, top: 30, bottom: 20),
+                decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
                     topRight: Radius.circular(30),
@@ -87,8 +93,8 @@ class ProfileScreen extends GetWidget<ProfileController> {
                               HapticFeedback.heavyImpact();
                               logoutDialog();
                             } else {
-                              Get.toNamed(
-                                  "AppRoutes.${controller.profileModel[index].route}");
+                              controller.routesHandler(
+                                  controller.profileModel[index].profileOption);
                             }
                           },
                           leading: CommonImageView(
@@ -101,12 +107,19 @@ class ProfileScreen extends GetWidget<ProfileController> {
                             Icons.arrow_forward_ios,
                             color: Colors.grey,
                           ),
-                          title: Text(
-                            controller.profileModel[index].profileOption,
-                            style: GoogleFonts.getFont(
-                              'Signika Negative',
-                              color: Colors.grey,
-                              fontSize: Get.width * 0.06,
+                          title: Align(
+                            alignment: Alignment.centerLeft,
+                            child: FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Text(
+                                controller.profileModel[index].profileOption,
+                                maxLines: 1,
+                                style: GoogleFonts.getFont(
+                                  'Signika Negative',
+                                  color: Colors.grey,
+                                  fontSize: Get.width * 0.06,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -134,7 +147,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                "Are you sure want to delete?",
+                "Are you sure want to logout?",
                 style: GoogleFonts.getFont(
                   'Signika Negative',
                 ),
@@ -170,7 +183,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
                     controller.onLogout();
                   },
                   child: Text(
-                    "delete",
+                    "logout",
                     style: GoogleFonts.getFont(
                       'Signika Negative',
                       color: Colors.white,

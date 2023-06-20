@@ -1,6 +1,8 @@
 import 'package:shopexpress/core/app_export.dart';
 import 'package:shopexpress/presentation/cart_screen/model/cart_model.dart';
 
+import '../../../widgets/gif_animator.dart';
+
 class CartController extends GetxController {
   RxList<CartItem> cartItems = <CartItem>[].obs;
   RxDouble subTotal = 0.0.obs;
@@ -17,6 +19,11 @@ class CartController extends GetxController {
         }
       }
       if (!itemMatched) {
+        Get.dialog(GifAnimator(
+          imagePath: addToCart,
+          duration: Duration(milliseconds: 2700),
+          frames: 90,
+        ));
         cartItems.add(item);
         updateCartNumber();
         updateCartTotal();
@@ -24,6 +31,11 @@ class CartController extends GetxController {
         customSnackBar("Alert", "Item already in cart", 'red');
       }
     } else {
+      Get.dialog(GifAnimator(
+        imagePath: addToCart,
+        duration: Duration(milliseconds: 2700),
+        frames: 90,
+      ));
       cartItems.add(item);
       updateCartNumber();
       updateCartTotal();
@@ -32,6 +44,11 @@ class CartController extends GetxController {
 
   void removeItemFromCart(int index) {
     cartItems.removeAt(index);
+    Get.dialog(GifAnimator(
+      imagePath: deleteGIF,
+      duration: Duration(milliseconds: 3660),
+      frames: 122,
+    ));
     updateCartNumber();
     updateCartTotal();
   }

@@ -203,28 +203,31 @@ class FavoriteScreen extends GetWidget<FavoriteController> {
                                                                         const SizedBox(
                                                                             height:
                                                                                 5),
-                                                                        Row(
-                                                                          children: [
-                                                                            Text(
-                                                                              "₹${controller.favoriteModel[index].productPrice}",
-                                                                              style: GoogleFonts.getFont(
-                                                                                'Signika Negative',
-                                                                                decoration: TextDecoration.lineThrough,
-                                                                                color: Colors.black.withOpacity(0.6),
-                                                                                fontSize: Get.width * 0.04,
+                                                                        FittedBox(
+                                                                          fit: BoxFit.scaleDown,
+                                                                          child: Row(
+                                                                            children: [
+                                                                              Text(
+                                                                                "₹${controller.favoriteModel[index].productPrice}",
+                                                                                style: GoogleFonts.getFont(
+                                                                                  'Signika Negative',
+                                                                                  decoration: TextDecoration.lineThrough,
+                                                                                  color: Colors.black.withOpacity(0.6),
+                                                                                  fontSize: Get.width * 0.04,
+                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                            const SizedBox(
-                                                                              width: 5,
-                                                                            ),
-                                                                            Text(
-                                                                              "₹${controller.favoriteModel[index].productDisplayPrice.toStringAsFixed(2)}",
-                                                                              style: GoogleFonts.getFont(
-                                                                                'Signika Negative',
-                                                                                fontSize: Get.width * 0.05,
+                                                                              const SizedBox(
+                                                                                width: 5,
                                                                               ),
-                                                                            ),
-                                                                          ],
+                                                                              Text(
+                                                                                "₹${controller.favoriteModel[index].productDisplayPrice.toStringAsFixed(2)}",
+                                                                                style: GoogleFonts.getFont(
+                                                                                  'Signika Negative',
+                                                                                  fontSize: Get.width * 0.05,
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         ),
                                                                         const SizedBox(
                                                                           height:

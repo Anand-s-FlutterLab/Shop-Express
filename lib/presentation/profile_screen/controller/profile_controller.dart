@@ -8,11 +8,27 @@ import 'package:shopexpress/presentation/profile_screen/model/profile_model.dart
 class ProfileController extends GetxController {
   RxList<ProfileModel> profileModel = <ProfileModel>[].obs;
   RxBool isLoading = false.obs;
+  RxString profileURL = "".obs;
 
   @override
-  void onInit() {
-    getProfileData();
+  void onInit() async {
+    await getProfileData();
+    await getProfileUrl();
     super.onInit();
+  }
+
+  Future<void> getProfileUrl() async {
+    DocumentReference documentRef = FirebaseFirestore.instance
+        .collection(collectionUsers)
+        .doc(userID.value);
+
+    DocumentSnapshot snapshot = await documentRef.get();
+
+    if (snapshot.exists) {
+      profileURL.value = snapshot.get('Profile URL');
+    } else {
+      print('Document does not exist');
+    }
   }
 
   Future<void> getProfileData() async {
@@ -33,9 +49,33 @@ class ProfileController extends GetxController {
   Future<void> onLogout() async {
     try {
       FirebaseAuth.instance.signOut();
-      Get.offNamed(AppRoutes.loginScreen);
+      selectedBottomNavigationIndex = 0;
+      Get.offAllNamed(AppRoutes.loginScreen);
     } catch (error) {
       handleFirebaseError(error);
+    }
+  }
+
+  void routesHandler(String route) {
+    switch (route) {
+      case 'Edit Profile':
+        Get.toNamed(AppRoutes.editProfileScreen);
+        break;
+      case 'Orders':
+        Get.toNamed(AppRoutes.ordersScreen);
+        break;
+      case 'Saved Addresses':
+        Get.toNamed(AppRoutes.savedAddressesScreen);
+        break;
+      case 'Saved Cards':
+        Get.toNamed(AppRoutes.savedCardsScreen);
+        break;
+      case 'Wallet':
+        Get.toNamed(AppRoutes.savedAddressesScreen);
+        break;
+      case 'Customer Support':
+        Get.toNamed(AppRoutes.customerSupportScreen);
+        break;
     }
   }
 }

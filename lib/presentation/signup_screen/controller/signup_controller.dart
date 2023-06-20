@@ -11,6 +11,7 @@ class SignupController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   RxBool isSignupPressed = false.obs;
+  RxBool obscureText = true.obs;
 
   Future<void> onSignup() async {
     isSignupPressed.value = true;
@@ -45,6 +46,8 @@ class SignupController extends GetxController {
         lastName: lastNameController.text,
         emailAddress: emailController.text,
       );
+      userName.value = firstNameController.text;
+      await writeStorage(storageUserFirstName, firstNameController.text);
       final DocumentReference productDoc = FirebaseFirestore.instance
           .collection(collectionUsers)
           .doc(userID.value);

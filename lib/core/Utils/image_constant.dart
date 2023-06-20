@@ -3,6 +3,10 @@ String loginBackgroundImage = "assets/images/loginBackgroundImage.png";
 String emailVerificationImage = "assets/images/emailVerification.png";
 String forgotPasswordImage = "assets/images/forgotPassword.png";
 String noImageFoundImage = "assets/images/noImageFound.png";
+String placeOrder = "assets/images/placeOrder.png";
+String addToCart = "assets/images/addToCartGIF.gif";
+String deleteGIF = "assets/images/deleteGIF.gif";
+String orderPlacedGIF = "assets/images/orderPlacedGIF.gif";
 
 String appLogo = "assets/images/appLogo.png";
 
@@ -22,3 +26,11 @@ String noInternetConnection =
     "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FnointernetConnection.png?alt=media&token=0610c047-0b27-4999-ac05-7611b4ac22b9";
 String defaultProfileImage =
     "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FdefaultProfile.png?alt=media&token=f50dd430-c012-4902-88e8-89753c0c89f7";
+String noCardFound =
+    "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FnoCreditCard.png?alt=media&token=c62036d0-c860-46e3-b7bd-637532e0c857";
+String noAddressesFound =
+    "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FdeliveryAddressesNotFound.png?alt=media&token=584dc1cc-b4ab-4380-b899-6c9267e6c008";
+String noCreditCardFound =
+    "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FnoCreditCard.png?alt=media&token=c62036d0-c860-46e3-b7bd-637532e0c857";
+String permissionDenied =
+    "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FpermissionDenied.png?alt=media&token=9cd35f0c-0926-4ddd-b35d-2846f96dbf12";

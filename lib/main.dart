@@ -20,7 +20,7 @@ class ShopExpress extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Notes',
+        title: 'Shop Express',
         initialRoute: AppRoutes.splashScreen,
         getPages: AppRoutes.pages,
         initialBinding: InitialBindings());

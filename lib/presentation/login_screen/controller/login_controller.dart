@@ -8,6 +8,7 @@ class LoginController extends GetxController {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   RxBool isLoginPressed = false.obs;
+  RxBool obscureText = true.obs;
 
   Future<void> onLogin() async {
     isLoginPressed.value = true;
@@ -42,7 +43,9 @@ class LoginController extends GetxController {
       if (snapshot.exists) {
         final data = snapshot.data() as Map<String, dynamic>;
         LoginModel loginModel = LoginModel.fromJson(data);
+        userID.value = FirebaseAuth.instance.currentUser!.uid;
         isAdmin.value = loginModel.isAdmin;
+        userName.value = loginModel.firstName;
         await writeStorage(storageUserID, userId);
         await writeStorage(storageUserFirstName, loginModel.firstName);
         await writeStorage(storageUserRole, isAdmin.value ? "Admin" : "User");

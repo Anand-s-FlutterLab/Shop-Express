@@ -452,7 +452,7 @@ class HomeScreen extends GetWidget<HomeScreenController> {
                 maxLines: 1,
                 style: GoogleFonts.getFont(
                   'Signika Negative',
-                  fontSize: Get.width * 0.045,
+                  fontSize: Get.width * 0.04,
                 ),
               ),
             ),

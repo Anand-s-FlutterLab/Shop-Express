@@ -21,7 +21,7 @@ class SearchProductController extends GetxController {
     try {
       products.clear();
       if (!isSpecialOfferSelected.value && customSearch.value == "") {
-        print("firest");
+        isSpecialOfferSelected.value = false;
         int start = categoryRanges[selectedCategory.value]!.elementAt(0);
         int end = categoryRanges[selectedCategory.value]!.elementAt(1);
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -36,7 +36,7 @@ class SearchProductController extends GetxController {
           products.add(product);
         }
       } else if (customSearch.value == " " || customSearch.value.isEmpty) {
-        print("third");
+        isSpecialOfferSelected.value = false;
         int start = categoryRanges["All Products"]?.elementAt(0) ?? 0;
         int end = categoryRanges["All Products"]?.elementAt(1) ?? 0;
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
@@ -51,7 +51,6 @@ class SearchProductController extends GetxController {
           products.add(product);
         }
       } else if (!isSpecialOfferSelected.value && customSearch.value != "") {
-        print("second");
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('products')
             .where("productName", isGreaterThanOrEqualTo: customSearch.value)
@@ -64,7 +63,6 @@ class SearchProductController extends GetxController {
           products.add(product);
         }
       } else {
-        print("forth");
         isSpecialOfferSelected.value = false;
         QuerySnapshot querySnapshot = await FirebaseFirestore.instance
             .collection('products')

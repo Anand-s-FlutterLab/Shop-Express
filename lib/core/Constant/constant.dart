@@ -7,3 +7,5 @@ const String collectionCategoryImages = "Category Images";
 const String collectionItemSlider = "Item Slider";
 const String collectionUsers = "Users";
 const String collectionProfileImages = "Profile Images";
+const String collectionCustomerSupport = "Customer Support";
+const String collectionCheckoutImages = "Checkout Images";

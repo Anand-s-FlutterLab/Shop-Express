@@ -14,14 +14,16 @@ class AppDecoration {
   }
 
   static BoxDecoration inputBoxDecorationShadowWithBorder() {
-    return BoxDecoration(boxShadow: [
-      BoxShadow(
-        color: Colors.black.withOpacity(0.1),
-        blurRadius: 20,
-        offset: const Offset(0, 5),
-      )
-    ],
-    borderRadius: BorderRadius.circular(15), border: Border.all(color: Colors.grey.shade400));
+    return BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 5),
+          )
+        ],
+        borderRadius: BorderRadius.circular(15),
+        border: Border.all(color: Colors.grey.shade400));
   }
 
   static BoxDecoration inputBoxDecorationShaddowDark() {
@@ -38,6 +40,7 @@ class AppDecoration {
       [String lableText = "", String hintText = ""]) {
     return InputDecoration(
       labelText: lableText,
+      counterText: "",
       labelStyle:
           GoogleFonts.getFont('Signika Negative', fontSize: Get.width * 0.05),
       hintText: hintText,
@@ -144,20 +147,21 @@ class AppDecoration {
       ],
     );
   }
+
   static BoxDecoration get primaryBoxDecoration => BoxDecoration(
-    gradient: LinearGradient(
-      begin: const Alignment(
-        -1.4180527863061343e-9,
-        -0.061403480546041056,
-      ),
-      end: const Alignment(
-        1.000000006060046,
-        1.114035163419933,
-      ),
-      colors: [
-        Colors.blue.shade400,
-        Colors.blue.shade800,
-      ],
-    ),
-  );
+        gradient: LinearGradient(
+          begin: const Alignment(
+            -1.4180527863061343e-9,
+            -0.061403480546041056,
+          ),
+          end: const Alignment(
+            1.000000006060046,
+            1.114035163419933,
+          ),
+          colors: [
+            Colors.blue.shade400,
+            Colors.blue.shade800,
+          ],
+        ),
+      );
 }

@@ -2,7 +2,6 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shopexpress/core/app_export.dart';
-import 'package:shopexpress/presentation/home_screen/model/home_model.dart';
 import 'package:shopexpress/presentation/manage_item_slider_screen/model/manage_item_slider_model.dart';
 
 class ManageItemSliderController extends GetxController {

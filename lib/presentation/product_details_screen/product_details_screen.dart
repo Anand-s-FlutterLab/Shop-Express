@@ -349,7 +349,7 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
                                 ]),
                           )))
                 ]),
-                _buldFloatBar()
+                _buldFloatBar(),
               ])
             : Center(
                 child: LoadingAnimationWidget.fourRotatingDots(
@@ -362,6 +362,8 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
   Widget _buildLine() {
     return Container(height: 1, color: const Color(0xFFEEEEEE));
   }
+
+
 
   Widget _buldFloatBar() {
     buildAddCard() => Container(
