@@ -13,7 +13,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
   final ConnectivityController connectivityController =
-  Get.find<ConnectivityController>();
+      Get.find<ConnectivityController>();
   late AnimationController scaleController;
   late Animation<double> scaleAnimation;
 
@@ -29,19 +29,19 @@ class _SplashScreenState extends State<SplashScreen>
       vsync: this,
       duration: Duration(milliseconds: 600),
     )..addStatusListener(
-          (status) {
-        if (status == AnimationStatus.completed && _disposed) {
-          Timer(
-            Duration(milliseconds: 300),
-                () {
-              if (!_disposed) {
-                scaleController.reset();
-              }
-            },
-          );
-        }
-      },
-    );
+        (status) {
+          if (status == AnimationStatus.completed && _disposed) {
+            Timer(
+              Duration(milliseconds: 300),
+              () {
+                if (!_disposed) {
+                  scaleController.reset();
+                }
+              },
+            );
+          }
+        },
+      );
 
     scaleAnimation =
         Tween<double>(begin: 0.0, end: 12).animate(scaleController);
@@ -55,7 +55,6 @@ class _SplashScreenState extends State<SplashScreen>
     Timer(Duration(milliseconds: 2000), () {
       setState(() {
         scaleController.forward();
-        initializeApp();
       });
     });
   }
@@ -65,28 +64,6 @@ class _SplashScreenState extends State<SplashScreen>
     _disposed = true;
     scaleController.dispose();
     super.dispose();
-  }
-
-  Future<void> initializeApp() async {
-    if (FirebaseAuth.instance.currentUser != null) {
-      String role = await readStorage(storageUserRole) ?? "";
-      isAdmin.value = role == "Admin";
-      userID.value = await readStorage(storageUserID) ?? "";
-      userName.value = await readStorage(storageUserFirstName) ?? "";
-
-      if (userID.isEmpty || userName.isEmpty) {
-        customSnackBar(
-          "Session Expire",
-          "Your session has expired. Please proceed to log in again to continue.",
-        );
-      } else if (FirebaseAuth.instance.currentUser!.emailVerified) {
-        Get.offNamed(AppRoutes.homeScreen);
-      } else {
-        Get.offNamed(AppRoutes.emailVerificationScreen);
-      }
-    } else {
-      Get.offNamed(AppRoutes.loginScreen);
-    }
   }
 
   @override

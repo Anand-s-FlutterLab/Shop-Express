@@ -19,4 +19,27 @@ class CartItem {
     required this.productBrand,
     required this.displayImageLink,
   });
+
+  Map<String, dynamic> toJson() {
+    return {
+      'productId': productId,
+      'productName': productName,
+      'productBrand': productBrand,
+      'productDisplayPrice': productDisplayPrice,
+      'displayImageLink': displayImageLink,
+      'productQuantity': productQuantity.value,
+      'productFinalPrice': productFinalPrice.value,
+    };
+  }
+
+  factory CartItem.fromJson(Map<String, dynamic> json) {
+    return CartItem(
+      productId: json['productId'],
+      productName: json['productName'],
+      productBrand: json['productBrand'],
+      productDisplayPrice: json['productDisplayPrice'],
+      displayImageLink: json['displayImageLink'],
+      productQuantity: RxInt(json['productQuantity']),
+    );
+  }
 }
