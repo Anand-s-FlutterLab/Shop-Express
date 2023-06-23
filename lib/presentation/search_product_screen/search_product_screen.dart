@@ -232,7 +232,7 @@ class SearchProductScreen extends GetWidget<SearchProductController> {
                                                                 child: Row(
                                                                   children: [
                                                                     Text(
-                                                                      "₹${controller.products[index].productPrice}",
+                                                                      "₹${numberFormatter(controller.products[index].productPrice)}",
                                                                       style: GoogleFonts
                                                                           .getFont(
                                                                         'Signika Negative',
@@ -250,7 +250,7 @@ class SearchProductScreen extends GetWidget<SearchProductController> {
                                                                       width: 5,
                                                                     ),
                                                                     Text(
-                                                                      "₹${controller.products[index].productDisplayPrice.toStringAsFixed(2)}",
+                                                                      "₹${numberFormatter(controller.products[index].productDisplayPrice)}",
                                                                       style: GoogleFonts
                                                                           .getFont(
                                                                         'Signika Negative',

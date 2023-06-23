@@ -30,7 +30,7 @@ class SavedAddressesController extends GetxController {
           .collection(collectionUsers)
           .doc(userID.value);
       await docRef.get().then((value) {
-        List savedAddressSnapshot = value.get('Saved Addresses') ?? [];
+        List savedAddressSnapshot = value.get(collectionSavedAddresses) ?? [];
         savedDeliveryAddress.clear();
         if (savedAddressSnapshot.isNotEmpty) {
           for (var i = 0; i < savedAddressSnapshot.length; i++) {
@@ -41,7 +41,9 @@ class SavedAddressesController extends GetxController {
         }
       });
     } catch (error) {
-      handleFirebaseError(error);
+      if (error is! StateError) {
+        handleFirebaseError(error);
+      }
     } finally {
       isLoading.value = false;
     }
@@ -67,7 +69,7 @@ class SavedAddressesController extends GetxController {
           .doc(userID.value);
 
       await docRef.set({
-        'Saved Addresses': FieldValue.arrayUnion([address.toJson()])
+        collectionSavedAddresses: FieldValue.arrayUnion([address.toJson()])
       }, SetOptions(merge: true));
       savedAddresses();
       Get.back();

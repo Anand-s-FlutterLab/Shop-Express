@@ -82,7 +82,9 @@ class SavedCardsController extends GetxController {
         }
       });
     } catch (error) {
-      handleFirebaseError(error);
+      if (error is! StateError) {
+        handleFirebaseError(error);
+      }
     } finally {
       isLoading.value = false;
     }

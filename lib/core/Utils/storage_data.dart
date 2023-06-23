@@ -10,25 +10,9 @@ class InitialDataLoad extends GetxController {
   }
 
   Future<void> initializeApp() async {
-    if (FirebaseAuth.instance.currentUser != null) {
-      String role = await readStorage(storageUserRole) ?? "";
-      isAdmin.value = role == "Admin";
-      userID.value = FirebaseAuth.instance.currentUser!.uid;
-      userName.value = await readStorage(storageUserFirstName) ?? "";
-
-      if (userID.isEmpty || userName.isEmpty) {
-        customSnackBar(
-          "Session Expire",
-          "Your session has expired. Please proceed to log in again to continue.",
-        );
-        Get.offNamed(AppRoutes.loginScreen);
-      } else if (FirebaseAuth.instance.currentUser!.emailVerified) {
-        Get.offNamed(AppRoutes.homeScreen);
-      } else {
-        Get.offNamed(AppRoutes.emailVerificationScreen);
-      }
-    } else {
-      Get.offNamed(AppRoutes.loginScreen);
-    }
+    String role = await readStorage(storageUserRole) ?? "";
+    isAdmin.value = role == "Admin";
+    userID.value = FirebaseAuth.instance.currentUser!.uid;
+    userName.value = await readStorage(storageUserFirstName) ?? "";
   }
 }

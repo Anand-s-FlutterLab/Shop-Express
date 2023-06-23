@@ -70,8 +70,8 @@ class ProfileController extends GetxController {
       case 'Saved Cards':
         Get.toNamed(AppRoutes.savedCardsScreen);
         break;
-      case 'Wallet':
-        Get.toNamed(AppRoutes.savedAddressesScreen);
+      case 'Coupons':
+        Get.toNamed(AppRoutes.couponsScreen);
         break;
       case 'Customer Support':
         Get.toNamed(AppRoutes.customerSupportScreen);

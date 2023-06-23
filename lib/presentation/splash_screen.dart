@@ -19,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   double _opacity = 0;
   bool _value = true;
-  bool _disposed = false;
 
   @override
   void initState() {
@@ -30,15 +29,19 @@ class _SplashScreenState extends State<SplashScreen>
       duration: Duration(milliseconds: 600),
     )..addStatusListener(
         (status) {
-          if (status == AnimationStatus.completed && _disposed) {
-            Timer(
-              Duration(milliseconds: 300),
-              () {
-                if (!_disposed) {
-                  scaleController.reset();
-                }
-              },
-            );
+          if (status == AnimationStatus.completed) {
+            if (FirebaseAuth.instance.currentUser != null) {
+              if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                Get.offNamed(AppRoutes.homeScreen);
+              } else {
+                Get.offNamed(AppRoutes.emailVerificationScreen);
+              }
+            } else {
+              Get.offNamed(AppRoutes.loginScreen);
+            }
+            Timer(Duration(milliseconds: 300), () {
+              scaleController.reset();
+            });
           }
         },
       );
@@ -61,7 +64,6 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   void dispose() {
-    _disposed = true;
     scaleController.dispose();
     super.dispose();
   }

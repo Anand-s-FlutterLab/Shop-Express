@@ -12,6 +12,7 @@ class ProfileScreen extends GetWidget<ProfileController> {
           child: CustomScrollView(
         slivers: [
           SliverAppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: const Color.fromRGBO(203, 207, 250, 1),
             expandedHeight: Get.height * 0.4,
             flexibleSpace: FlexibleSpaceBar(

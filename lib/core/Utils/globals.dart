@@ -22,5 +22,5 @@ final Map<String, List<int>> categoryRanges = {
   'Power Bank': [160001, 169999],
   'Earphones': [170001, 179999],
   'All Products': [0, 999999],
-  'Special Offer': [0, 999999]
+  'Special Offer': [0, 999999],
 };

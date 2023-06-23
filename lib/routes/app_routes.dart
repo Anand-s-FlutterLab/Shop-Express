@@ -17,6 +17,7 @@ import 'package:shopexpress/presentation/home_screen/home_screen.dart';
 import 'package:shopexpress/presentation/login_screen/binding/login_binding.dart';
 import 'package:shopexpress/presentation/login_screen/login_screen.dart';
 import 'package:shopexpress/presentation/orders_screen/binding/orders_binding.dart';
+import 'package:shopexpress/presentation/orders_screen/order_details_screen.dart';
 import 'package:shopexpress/presentation/orders_screen/orders_screen.dart';
 import 'package:shopexpress/presentation/permission_error.dart';
 import 'package:shopexpress/presentation/product_details_screen/binding/product_details_binding.dart';
@@ -42,8 +43,8 @@ import 'package:shopexpress/presentation/manage_item_slider_screen/binding/manag
 import 'package:shopexpress/presentation/manage_product_screen/binding/manage_product_binding.dart';
 import 'package:shopexpress/presentation/manage_product_screen/manage_product_screen.dart';
 import 'package:shopexpress/presentation/error_screen.dart';
-import 'package:shopexpress/presentation/wallet_screen/binding/wallet_binding.dart';
-import 'package:shopexpress/presentation/wallet_screen/wallet_screen.dart';
+import 'package:shopexpress/presentation/coupons_screen/binding/coupons_binding.dart';
+import 'package:shopexpress/presentation/coupons_screen/coupons_screen.dart';
 
 class AppRoutes {
   static String splashScreen = "/splash_screen";
@@ -65,9 +66,10 @@ class AppRoutes {
   static String errorScreen = "/error_screen";
   static String editProfileScreen = "/edit_profile_screen";
   static String ordersScreen = "/orders_screen";
+  static String orderDetailsScreen = "/order_details_screen";
   static String savedAddressesScreen = "/saved_addresses_screen";
   static String savedCardsScreen = "/saved_cards_screen";
-  static String walletScreen = "/wallet_screen";
+  static String couponsScreen = "/coupons_screen";
   static String customerSupportScreen = "/customer_support_screen";
   static String permissionErrorScreen = "/permission_error_screen";
 
@@ -173,6 +175,11 @@ class AppRoutes {
       bindings: [OrdersBindings()],
     ),
     GetPage(
+      name: orderDetailsScreen,
+      page: () => OrderDetailsScreen(),
+      bindings: [OrdersBindings()],
+    ),
+    GetPage(
       name: savedAddressesScreen,
       page: () => SavedAddressesScreen(),
       bindings: [SavedAddressesBindings()],
@@ -183,9 +190,9 @@ class AppRoutes {
       bindings: [SavedCardsBindings()],
     ),
     GetPage(
-      name: walletScreen,
-      page: () => WalletScreen(),
-      bindings: [WalletBindings()],
+      name: couponsScreen,
+      page: () => CouponsScreen(),
+      bindings: [CouponsBindings()],
     ),
     GetPage(
       name: permissionErrorScreen,

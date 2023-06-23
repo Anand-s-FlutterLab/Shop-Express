@@ -187,7 +187,7 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
                                   Row(
                                     children: [
                                       Text(
-                                        "₹${controller.product.productDisplayPrice.toStringAsFixed(2)}",
+                                        "₹${numberFormatter(controller.product.productDisplayPrice)}",
                                         style: GoogleFonts.getFont(
                                           'Signika Negative',
                                           fontSize: Get.width * 0.06,
@@ -234,7 +234,7 @@ class ProductDetailsScreen extends GetWidget<ProductDetailsController> {
                                         ),
                                       ),
                                       Text(
-                                        "₹${controller.product.productPrice}",
+                                        "₹${numberFormatter(controller.product.productPrice)}",
                                         style: GoogleFonts.getFont(
                                           'Signika Negative',
                                           decoration:

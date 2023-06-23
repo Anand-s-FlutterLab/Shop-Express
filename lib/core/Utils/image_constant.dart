@@ -34,3 +34,5 @@ String noCreditCardFound =
     "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FnoCreditCard.png?alt=media&token=c62036d0-c860-46e3-b7bd-637532e0c857";
 String permissionDenied =
     "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FpermissionDenied.png?alt=media&token=9cd35f0c-0926-4ddd-b35d-2846f96dbf12";
+String noOrdersFound =
+    "https://firebasestorage.googleapis.com/v0/b/shopexpress-990f2.appspot.com/o/Genaral%20Image%2FnoOrdersFound.png?alt=media&token=2082210a-75cb-42ff-b6de-4f19521c582b";

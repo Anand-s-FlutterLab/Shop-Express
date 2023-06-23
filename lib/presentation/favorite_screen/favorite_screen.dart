@@ -204,11 +204,13 @@ class FavoriteScreen extends GetWidget<FavoriteController> {
                                                                             height:
                                                                                 5),
                                                                         FittedBox(
-                                                                          fit: BoxFit.scaleDown,
-                                                                          child: Row(
+                                                                          fit: BoxFit
+                                                                              .scaleDown,
+                                                                          child:
+                                                                              Row(
                                                                             children: [
                                                                               Text(
-                                                                                "₹${controller.favoriteModel[index].productPrice}",
+                                                                                "₹${numberFormatter(controller.favoriteModel[index].productPrice)}",
                                                                                 style: GoogleFonts.getFont(
                                                                                   'Signika Negative',
                                                                                   decoration: TextDecoration.lineThrough,
@@ -220,7 +222,7 @@ class FavoriteScreen extends GetWidget<FavoriteController> {
                                                                                 width: 5,
                                                                               ),
                                                                               Text(
-                                                                                "₹${controller.favoriteModel[index].productDisplayPrice.toStringAsFixed(2)}",
+                                                                                "₹${numberFormatter(controller.favoriteModel[index].productDisplayPrice)}",
                                                                                 style: GoogleFonts.getFont(
                                                                                   'Signika Negative',
                                                                                   fontSize: Get.width * 0.05,

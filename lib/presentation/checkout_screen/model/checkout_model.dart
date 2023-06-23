@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:shopexpress/core/app_export.dart';
+import 'package:shopexpress/core/Utils/date_time.dart';
 import 'package:shopexpress/presentation/cart_screen/model/cart_model.dart';
 import 'package:shopexpress/presentation/saved_address_screen/model/saved_address_model.dart';
 
@@ -9,11 +12,14 @@ class CheckoutModel {
   double taxes;
   String paymentMethod;
   String transactionId;
-  DateTime expectedDeliveryDate;
+  String expectedDeliveryDate;
   String orderStatus;
   List<CartItem> items;
   SavedAddress deliveryAddress;
   String orderID;
+  String orderDate;
+  double orderTotal;
+  String appliedCoupon;
 
   CheckoutModel({
     required this.totalItems,
@@ -22,11 +28,14 @@ class CheckoutModel {
     required this.taxes,
     required this.paymentMethod,
     this.transactionId = '',
-    required this.expectedDeliveryDate,
+    this.expectedDeliveryDate = '',
     required this.orderStatus,
     required this.items,
     required this.deliveryAddress,
     this.orderID = '',
+    this.orderDate = '',
+    required this.orderTotal,
+    required this.appliedCoupon,
   });
 
   factory CheckoutModel.fromJson(Map<String, dynamic> json) {
@@ -43,17 +52,22 @@ class CheckoutModel {
       taxes: json['taxes'],
       paymentMethod: json['paymentMethod'],
       transactionId: json['transactionId'],
-      expectedDeliveryDate: DateTime.parse(json['expectedDeliveryDate']),
+      expectedDeliveryDate: json['expectedDeliveryDate'],
       orderStatus: json['orderStatus'],
       items: items,
       deliveryAddress: deliveryAddress,
       orderID: json['orderID'],
+      orderTotal: json['orderTotal'],
+      orderDate: json['orderDate'],
+      appliedCoupon: json['appliedCoupon'],
     );
   }
 
   Map<String, dynamic> toJson() {
     List<Map<String, dynamic>> itemsJson =
         items.map((item) => item.toJson()).toList();
+    final orderID = Random().nextInt(900000) + 100000;
+    final transactionID = Random().nextInt(900000) + 100000;
 
     return {
       'totalItems': totalItems,
@@ -61,13 +75,16 @@ class CheckoutModel {
       'shippingCharges': shippingCharges,
       'taxes': taxes,
       'paymentMethod': paymentMethod,
-      'transactionId': transactionId,
-      'expectedDeliveryDate': expectedDeliveryDate.toIso8601String(),
+      'transactionId': "SETI$transactionID",
+      'expectedDeliveryDate':
+          dateFormatter(dateFormat: dateFormatWithDay, deliveryDelay: 5),
       'orderStatus': orderStatus,
       'items': itemsJson,
       'deliveryAddress': deliveryAddress.toJson(),
-      'orderID': DateTime.now().microsecondsSinceEpoch.toString() +
-          userID.value.substring(2, 4),
+      'orderID': "SEOS$orderID",
+      'orderDate': dateFormatter(dateFormat: dateFormatWithDayAndTime),
+      'orderTotal': orderTotal,
+      'appliedCoupon': appliedCoupon,
     };
   }
 }

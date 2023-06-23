@@ -37,7 +37,7 @@ class CartItem {
       productId: json['productId'],
       productName: json['productName'],
       productBrand: json['productBrand'],
-      productDisplayPrice: json['productDisplayPrice'],
+      productDisplayPrice: double.parse(json['productFinalPrice'].toString()),
       displayImageLink: json['displayImageLink'],
       productQuantity: RxInt(json['productQuantity']),
     );

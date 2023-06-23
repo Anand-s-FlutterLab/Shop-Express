@@ -53,7 +53,7 @@ class SavedCardsScreen extends GetWidget<SavedCardsController> {
                                   url: noCreditCardFound,
                                 ),
                                 Text(
-                                  "No Credit Card found",
+                                  "No Card found",
                                   style: GoogleFonts.getFont(
                                     'Signika Negative',
                                     textStyle: TextStyle(
