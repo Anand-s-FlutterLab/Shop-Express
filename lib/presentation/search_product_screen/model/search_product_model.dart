@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class SearchProductModel {
   final String productName;
   final String productBrand;
@@ -6,6 +8,7 @@ class SearchProductModel {
   final double productDiscount;
   final double productDisplayPrice;
   final String displayImageLink;
+  final RxBool isFavorite;
 
   SearchProductModel({
     required this.productName,
@@ -15,7 +18,8 @@ class SearchProductModel {
     required this.productDiscount,
     required this.productDisplayPrice,
     required this.displayImageLink,
-  });
+    bool isFavorite = false,
+  }) : isFavorite = isFavorite.obs;
 
   factory SearchProductModel.fromFirestore(Map<String, dynamic> firestoreData) {
     return SearchProductModel(
@@ -26,6 +30,7 @@ class SearchProductModel {
       productDiscount: firestoreData['productDiscount'],
       productDisplayPrice: firestoreData['productDisplayPrice'],
       displayImageLink: firestoreData['displayImageLink'],
+      isFavorite: firestoreData['isFavorite'] ?? false,
     );
   }
 }

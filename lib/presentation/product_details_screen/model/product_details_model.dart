@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class ProductDetailsModel {
   final String productId;
   final String productName;
@@ -10,6 +12,7 @@ class ProductDetailsModel {
   final String displayImageLink;
   final List<String> productImages;
   final Map<String, String> productDetails;
+  final RxBool isFavorite;
 
   ProductDetailsModel({
     required this.productId,
@@ -23,7 +26,8 @@ class ProductDetailsModel {
     required this.displayImageLink,
     required this.productImages,
     required this.productDetails,
-  });
+    bool isFavorite = false,
+  }) : isFavorite = isFavorite.obs;
 
   factory ProductDetailsModel.fromFirestore(
       Map<String, dynamic> firestoreData) {
@@ -37,8 +41,10 @@ class ProductDetailsModel {
       productDiscount: firestoreData['productDiscount'],
       productDisplayPrice: firestoreData['productDisplayPrice'],
       displayImageLink: firestoreData['displayImageLink'],
-      productImages: List<String>.from(firestoreData['productImages']).reversed.toList(),
+      productImages:
+          List<String>.from(firestoreData['productImages']).reversed.toList(),
       productDetails: Map<String, String>.from(firestoreData['productDetails']),
+      isFavorite: firestoreData['isFavorite'] ?? false,
     );
   }
 }

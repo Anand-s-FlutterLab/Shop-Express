@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -91,6 +90,8 @@ class AddProductController extends GetxController {
     );
 
     await addProductToFireStore(product, imageUrls);
+    customSnackBar(
+        "Item Added", "The item has been added successfully.", "green");
     deleteEverything();
     isAddProductPressed.value = false;
   }
@@ -122,7 +123,7 @@ class AddProductController extends GetxController {
       AddProductModel product, List<String> imageUrls) async {
     try {
       final DocumentReference productDoc = FirebaseFirestore.instance
-          .collection('products')
+          .collection(collectionProduct)
           .doc(productIDController.text);
 
       await productDoc.set({

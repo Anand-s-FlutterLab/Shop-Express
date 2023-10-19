@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shopexpress/core/Utils/common_utils.dart';
 import 'package:shopexpress/core/app_export.dart';
 
-import '../routes/app_routes.dart';
+import 'package:shopexpress/core/Network/network_info.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -11,12 +12,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen>
     with TickerProviderStateMixin {
+  final ConnectivityController connectivityController =
+      Get.find<ConnectivityController>();
   late AnimationController scaleController;
   late Animation<double> scaleAnimation;
 
   double _opacity = 0;
   bool _value = true;
-  bool _disposed = false;
 
   @override
   void initState() {
@@ -27,15 +29,19 @@ class _SplashScreenState extends State<SplashScreen>
       duration: Duration(milliseconds: 600),
     )..addStatusListener(
         (status) {
-          if (status == AnimationStatus.completed && _disposed) {
-            Timer(
-              Duration(milliseconds: 300),
-              () {
-                if (!_disposed) {
-                  scaleController.reset();
-                }
-              },
-            );
+          if (status == AnimationStatus.completed) {
+            if (FirebaseAuth.instance.currentUser != null) {
+              if (FirebaseAuth.instance.currentUser!.emailVerified) {
+                Get.offNamed(AppRoutes.homeScreen);
+              } else {
+                Get.offNamed(AppRoutes.emailVerificationScreen);
+              }
+            } else {
+              Get.offNamed(AppRoutes.loginScreen);
+            }
+            Timer(Duration(milliseconds: 300), () {
+              scaleController.reset();
+            });
           }
         },
       );
@@ -52,22 +58,12 @@ class _SplashScreenState extends State<SplashScreen>
     Timer(Duration(milliseconds: 2000), () {
       setState(() {
         scaleController.forward();
-        if (FirebaseAuth.instance.currentUser != null) {
-          if (FirebaseAuth.instance.currentUser!.emailVerified) {
-            Get.offNamed(AppRoutes.homeScreen);
-          } else {
-            Get.offNamed(AppRoutes.emailVerificationScreen);
-          }
-        } else {
-          Get.offNamed(AppRoutes.loginScreen);
-        }
       });
     });
   }
 
   @override
   void dispose() {
-    _disposed = true;
     scaleController.dispose();
     super.dispose();
   }
@@ -84,12 +80,10 @@ class _SplashScreenState extends State<SplashScreen>
                 padding: EdgeInsets.only(top: 80),
                 child: Text(
                   'ShopExpress',
-                  style: GoogleFonts.getFont(
-                    'Signika Negative',
-                    fontSize: Get.width * 0.1,
-                    color: Colors.blue,
-                    fontWeight: FontWeight.bold
-                  ),
+                  style: GoogleFonts.getFont('Signika Negative',
+                      fontSize: Get.width * 0.1,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
             ],
@@ -128,7 +122,7 @@ class _SplashScreenState extends State<SplashScreen>
                           child: Container(
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.deepPurpleAccent,
+                              color: Colors.transparent,
                             ),
                           ),
                         ),

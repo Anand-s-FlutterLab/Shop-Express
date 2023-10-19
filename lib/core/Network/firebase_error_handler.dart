@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shopexpress/widgets/snackbar.dart';
 
 void handleFirebaseError(dynamic error) {
   String errorMessage = '';
@@ -39,5 +40,5 @@ void handleFirebaseError(dynamic error) {
         break;
     }
   }
-  // customSnackBar("Error", errorMessage);
+  customSnackBar("Error", errorMessage);
 }
